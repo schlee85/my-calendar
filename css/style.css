@@ -1,0 +1,368 @@
+:root {
+	--bg: #f5f5f5;
+	--panel: #ffffff;
+	--border: rgba(0, 0, 0, 0.12);
+	--text: rgba(0, 0, 0, 0.87);
+	--muted: rgba(0, 0, 0, 0.6);
+	--accent: #1976d2;
+	--accent-hover: rgba(25, 118, 210, 0.04);
+	--accent-soft: rgba(25, 118, 210, 0.08);
+	--today: var(--accent);
+	--error: #d32f2f;
+	--error-soft: rgba(211, 47, 47, 0.08);
+	--radius: 4px;
+	--shadow-1:
+		0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+		0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+		0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	font-family:
+		'Roboto',
+		-apple-system,
+		'Segoe UI',
+		'Pretendard',
+		sans-serif;
+	background: var(--bg);
+	color: var(--text);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 32px 16px;
+}
+.page-title {
+	width: 100%;
+	max-width: 960px;
+	font-size: 24px;
+	font-weight: 500;
+	margin: 0 0 20px;
+	letter-spacing: 0;
+	text-align: center;
+}
+.app {
+	width: 100%;
+	max-width: 960px;
+	background: var(--panel);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-1);
+	overflow: hidden;
+}
+.toolbar {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	padding: 20px 24px;
+	border-bottom: 1px solid var(--border);
+}
+.toolbar h2 {
+	font-size: 20px;
+	margin: 0;
+	font-weight: 500;
+}
+.nav {
+	grid-column: 2;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.nav button {
+	border: none;
+	background: transparent;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--muted);
+	transition: background-color 0.15s ease;
+}
+.nav button:hover {
+	background: rgba(0, 0, 0, 0.04);
+}
+.today-btn {
+	grid-column: 3;
+	justify-self: end;
+	border: 1px solid rgba(25, 118, 210, 0.5);
+	background: transparent;
+	color: var(--accent);
+	padding: 0 16px;
+	height: 32px;
+	border-radius: var(--radius);
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.02857em;
+	white-space: nowrap;
+	transition: background-color 0.15s ease;
+}
+.today-btn:hover {
+	background: var(--accent-hover);
+}
+
+.legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding: 14px 24px;
+	border-bottom: 1px solid var(--border);
+}
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	background: rgba(0, 0, 0, 0.08);
+	border-radius: 16px;
+	padding: 4px 10px 4px 8px;
+}
+.legend-item .dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.weekdays {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	padding: 12px 12px 0;
+}
+.weekdays div {
+	text-align: center;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--muted);
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	padding: 8px 0;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-auto-rows: minmax(132px, auto);
+	gap: 0;
+	margin: 0 12px 16px;
+	border-top: 1px solid var(--border);
+	border-left: 1px solid var(--border);
+	border-radius: var(--radius);
+	overflow: hidden;
+}
+.cell {
+	position: relative;
+	padding: 8px 8px 6px;
+	border-right: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	overflow: hidden;
+	transition: background-color 0.15s ease;
+}
+.cell:hover {
+	background: var(--accent-hover);
+}
+.cell.out {
+	color: var(--muted);
+}
+.cell.holiday-cell {
+	background: var(--error-soft);
+}
+.cell.holiday-cell .lane {
+	opacity: 0.35;
+}
+.cell-head {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	overflow: hidden;
+}
+.cell .date-num {
+	font-size: 13px;
+	font-weight: 500;
+	width: 22px;
+	height: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+.cell.today .date-num {
+	background: var(--today);
+	color: white;
+}
+.date-num.holiday {
+	color: var(--error);
+}
+.holiday-label {
+	font-size: 10px;
+	font-weight: 500;
+	color: var(--error);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.cell.selected {
+	background: var(--accent-soft);
+	box-shadow: inset 0 0 0 2px var(--accent);
+	z-index: 1;
+}
+
+.lanes {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+.lane {
+	height: 16px;
+	margin: 0 -8px;
+	font-size: 10px;
+	line-height: 16px;
+	font-weight: 500;
+	color: white;
+	padding: 0 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.lane.round-left {
+	margin-left: 0;
+	border-top-left-radius: var(--radius);
+	border-bottom-left-radius: var(--radius);
+}
+.lane.round-right {
+	margin-right: 0;
+	border-top-right-radius: var(--radius);
+	border-bottom-right-radius: var(--radius);
+}
+
+.footer-panel {
+	border-top: 1px solid var(--border);
+	padding: 16px 24px 24px;
+}
+.footer-panel h2 {
+	font-size: 14px;
+	margin: 0 0 10px;
+	color: var(--muted);
+	font-weight: 500;
+}
+.event-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.event-list li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 13px;
+	padding: 6px 8px;
+	border-radius: var(--radius);
+	transition: background-color 0.15s ease;
+}
+.event-list li:hover {
+	background: rgba(0, 0, 0, 0.04);
+}
+.dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+.empty-note {
+	font-size: 13px;
+	color: var(--muted);
+}
+
+@media (max-width: 600px) {
+	body {
+		padding: 12px 8px;
+	}
+	.page-title {
+		font-size: 18px;
+		margin: 0 0 12px;
+	}
+	.toolbar {
+		padding: 12px 10px;
+	}
+	.toolbar h2 {
+		font-size: 15px;
+	}
+	.nav {
+		gap: 2px;
+	}
+	.nav button {
+		width: 30px;
+		height: 30px;
+	}
+	.nav button svg {
+		width: 16px;
+		height: 16px;
+	}
+	.today-btn {
+		padding: 0 8px;
+		height: 26px;
+		font-size: 11px;
+	}
+	.legend {
+		gap: 6px;
+		padding: 10px;
+	}
+	.legend-item {
+		font-size: 11px;
+		padding: 3px 8px 3px 6px;
+	}
+	.legend-item .dot {
+		width: 8px;
+		height: 8px;
+	}
+	.weekdays {
+		padding: 8px 6px 0;
+	}
+	.weekdays div {
+		font-size: 10px;
+		padding: 4px 0;
+	}
+	.grid {
+		grid-auto-rows: minmax(72px, auto);
+		margin: 0 6px 10px;
+	}
+	.cell {
+		padding: 4px 4px 3px;
+		gap: 3px;
+	}
+	.cell .date-num {
+		width: 18px;
+		height: 18px;
+		font-size: 11px;
+	}
+	.holiday-label {
+		font-size: 8px;
+	}
+	.lane {
+		height: 12px;
+		line-height: 12px;
+		font-size: 8px;
+		margin: 0 -4px;
+		padding: 0 3px;
+	}
+	.footer-panel {
+		padding: 10px 12px 16px;
+	}
+	.event-list li {
+		font-size: 12px;
+	}
+}
