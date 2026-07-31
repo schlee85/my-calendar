@@ -24,26 +24,6 @@ const schedule = CALENDAR_DATA.schedule
 	}))
 	.sort((a, b) => a.start - b.start);
 
-// 같은 담당자의 일정이 겹칠 때도 각 일정이 항상 같은 줄(레인)에 표시되도록,
-// 일정마다 레인을 한 번만 고정 배정합니다. (매일 다시 계산하면 막대가 중간에 줄을 옮겨 끊겨 보임)
-const memberLaneEnds = {};
-schedule.forEach((ev) => {
-	const laneEnds = memberLaneEnds[ev.memberIndex] || (memberLaneEnds[ev.memberIndex] = []);
-	// 비어있는 줄 중 "가장 최근에 끝난" 줄을 재사용 (번호가 작은 줄을 무조건 우선하면
-	// 훨씬 이전에 끝난 일정 자리로 배정돼 방금 끝난 일정과 이어지는 느낌이 안 남)
-	let laneIdx = -1;
-	let latestEnd = null;
-	laneEnds.forEach((end, idx) => {
-		if (end < ev.start && (latestEnd === null || end > latestEnd)) {
-			latestEnd = end;
-			laneIdx = idx;
-		}
-	});
-	if (laneIdx === -1) laneIdx = laneEnds.length;
-	laneEnds[laneIdx] = ev.end;
-	ev.lane = laneIdx;
-});
-
 const today = new Date();
 let viewYear = today.getFullYear();
 let viewMonth = today.getMonth(); // 0-indexed
@@ -74,7 +54,7 @@ function renderLegend() {
 function eventsForDate(dateObj) {
 	return schedule
 		.filter((ev) => dateObj >= ev.start && dateObj <= ev.end)
-		.sort((a, b) => a.memberIndex - b.memberIndex || a.lane - b.lane);
+		.sort((a, b) => a.memberIndex - b.memberIndex || a.end - b.end);
 }
 
 function render() {
@@ -121,22 +101,49 @@ function render() {
 
 	weeks.forEach((week) => {
 		const inMonthDates = week.filter((c) => !c.out).map((c) => c.date);
-		// 이 주(week)에 실제로 걸리는 레인 목록만 모음 — 번호만 크고 이 주엔 아무 일정도
-		// 없는 레인(예: 이미 끝난 일정 자리)은 아예 그리지 않아 빈 줄 간격이 안 생김.
-		const weekActiveLanes = {};
-		// 일정이 이 주(week) 이전부터 이어져 오는 경우, 이 주의 첫 날에도 라벨을 보여주기 위한 기준일.
+
+		// 이번 주에 걸리는 일정만 모아 "담당자 순서 -> 산출일(마감일)이 가까운 순"으로 정렬한 뒤,
+		// 겹치지 않는 가장 낮은 줄부터 채워나갑니다. 이렇게 하면
+		//   - 담당자 순서대로 쌓이는 기본 정렬은 유지되고
+		//   - 앞 담당자가 이번 주에 일정이 없으면 그 자리를 뒷사람 막대가 그대로 채우고
+		//   - 한 사람의 여러 일정도 서로 붙어서 쌓이되, 그 안에서는 마감일이 가까운 것부터 쌓입니다.
+		// 다만 줄 번호는 "이번 주" 기준으로 다시 계산되므로, 여러 주에 걸친 막대는
+		// 주가 바뀌는 경계에서 줄이 한 칸 정도 옮겨질 수 있습니다.
+		const weekEvents = schedule.filter((ev) => inMonthDates.some((date) => date >= ev.start && date <= ev.end));
+		weekEvents.sort((a, b) => a.memberIndex - b.memberIndex || a.end - b.end);
+
+		const rowEnds = [];
+		const rowOwner = [];
+		const weekRow = new Map();
 		const weekSegmentStart = new Map();
-		schedule.forEach((ev) => {
+		weekEvents.forEach((ev) => {
 			const datesInRange = inMonthDates.filter((date) => date >= ev.start && date <= ev.end);
-			if (datesInRange.length) {
-				const lanes = weekActiveLanes[ev.memberIndex] || (weekActiveLanes[ev.memberIndex] = []);
-				if (!lanes.includes(ev.lane)) lanes.push(ev.lane);
-				weekSegmentStart.set(ev, datesInRange[0]);
-			}
+			weekSegmentStart.set(ev, datesInRange[0]);
+
+			// 1) 같은 담당자가 쓰던 줄 중 비어있는 걸 최우선으로 재사용 (그 중 가장 최근에 끝난 줄)
+			//    -> 한 사람의 여러 막대가 서로 떨어지지 않고 붙어서 쌓임.
+			let row = -1;
+			let latestEnd = null;
+			rowEnds.forEach((end, idx) => {
+				if (rowOwner[idx] === ev.memberIndex && end < ev.start && (latestEnd === null || end > latestEnd)) {
+					latestEnd = end;
+					row = idx;
+				}
+			});
+			// 2) 같은 담당자 줄이 없으면, 다른 담당자가 비운 줄 중 가장 앞줄을 채움
+			//    -> 앞 담당자가 그 기간에 일정이 없으면 뒷사람 막대가 그 자리를 채움.
+			if (row === -1) row = rowEnds.findIndex((end) => end < ev.start);
+			// 3) 그래도 없으면 새 줄
+			if (row === -1) row = rowEnds.length;
+
+			rowEnds[row] = ev.end;
+			rowOwner[row] = ev.memberIndex;
+			weekRow.set(ev, row);
 		});
-		Object.keys(weekActiveLanes).forEach((idx) => {
-			weekActiveLanes[idx].sort((a, b) => a - b);
-		});
+		const rowCount = Math.max(rowEnds.length, 1);
+		const eventsByRow = Array.from({ length: rowCount }, (_, row) =>
+			weekEvents.filter((ev) => weekRow.get(ev) === row)
+		);
 
 		week.forEach((c) => {
 			const cell = document.createElement('div');
@@ -171,33 +178,29 @@ function render() {
 			lanes.className = 'lanes';
 
 			if (!c.out) {
-				MEMBERS.forEach((member, idx) => {
-					const activeLanes = weekActiveLanes[idx] && weekActiveLanes[idx].length ? weekActiveLanes[idx] : [0];
-					activeLanes.forEach((laneIdx) => {
-						const ev = schedule.find(
-							(e) => e.memberIndex === idx && e.lane === laneIdx && c.date >= e.start && c.date <= e.end
-						);
-						const lane = document.createElement('div');
-						lane.className = 'lane';
-						if (ev) {
-							lane.style.background = member.color;
-							const isStart = sameDate(c.date, ev.start);
-							const isEnd = sameDate(c.date, ev.end);
-							const isWeekSegmentStart = sameDate(c.date, weekSegmentStart.get(ev));
-							if (isStart) lane.classList.add('round-left');
-							if (isEnd) lane.classList.add('round-right');
-							if (isWeekSegmentStart) {
-								const laneText = document.createElement('span');
-								laneText.className = 'lane-text';
-								laneText.textContent = ev.title;
-								lane.appendChild(laneText);
-							}
-						} else {
-							lane.style.background = 'transparent';
+				for (let row = 0; row < rowCount; row++) {
+					const ev = eventsByRow[row].find((e) => c.date >= e.start && c.date <= e.end);
+					const lane = document.createElement('div');
+					lane.className = 'lane';
+					if (ev) {
+						const member = MEMBERS[ev.memberIndex];
+						lane.style.background = member.color;
+						const isStart = sameDate(c.date, ev.start);
+						const isEnd = sameDate(c.date, ev.end);
+						const isWeekSegmentStart = sameDate(c.date, weekSegmentStart.get(ev));
+						if (isStart) lane.classList.add('round-left');
+						if (isEnd) lane.classList.add('round-right');
+						if (isWeekSegmentStart) {
+							const laneText = document.createElement('span');
+							laneText.className = 'lane-text';
+							laneText.textContent = ev.title;
+							lane.appendChild(laneText);
 						}
-						lanes.appendChild(lane);
-					});
-				});
+					} else {
+						lane.style.background = 'transparent';
+					}
+					lanes.appendChild(lane);
+				}
 			}
 			cell.appendChild(lanes);
 
