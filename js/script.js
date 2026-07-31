@@ -15,12 +15,29 @@ function dateKey(date) {
 }
 
 const MEMBERS = CALENDAR_DATA.members;
-const schedule = CALENDAR_DATA.schedule.map((ev) => ({
-	memberIndex: MEMBERS.findIndex((m) => m.name === ev.member),
-	title: ev.title,
-	start: parseDate(ev.start),
-	end: parseDate(ev.end),
-}));
+const schedule = CALENDAR_DATA.schedule
+	.map((ev) => ({
+		memberIndex: MEMBERS.findIndex((m) => m.name === ev.member),
+		title: ev.title,
+		start: parseDate(ev.start),
+		end: parseDate(ev.end),
+	}))
+	.sort((a, b) => a.start - b.start);
+
+// 같은 담당자의 일정이 겹칠 때도 각 일정이 항상 같은 줄(레인)에 표시되도록,
+// 일정마다 레인을 한 번만 고정 배정합니다. (매일 다시 계산하면 막대가 중간에 줄을 옮겨 끊겨 보임)
+const memberLaneEnds = {};
+schedule.forEach((ev) => {
+	const laneEnds = memberLaneEnds[ev.memberIndex] || (memberLaneEnds[ev.memberIndex] = []);
+	let laneIdx = laneEnds.findIndex((end) => end < ev.start);
+	if (laneIdx === -1) laneIdx = laneEnds.length;
+	laneEnds[laneIdx] = ev.end;
+	ev.lane = laneIdx;
+});
+const memberLaneCount = {};
+schedule.forEach((ev) => {
+	memberLaneCount[ev.memberIndex] = Math.max(memberLaneCount[ev.memberIndex] || 1, ev.lane + 1);
+});
 
 const today = new Date();
 let viewYear = today.getFullYear();
@@ -124,32 +141,25 @@ function render() {
 
 		if (!c.out) {
 			MEMBERS.forEach((member, idx) => {
-				const dayEvents = schedule
-					.filter((e) => e.memberIndex === idx && c.date >= e.start && c.date <= e.end)
-					.sort((a, b) => a.start - b.start);
-
-				const primary = dayEvents[0];
-				const lane = document.createElement('div');
-				lane.className = 'lane';
-				if (primary) {
-					lane.style.background = member.color;
-					const isStart = sameDate(c.date, primary.start);
-					const isEnd = sameDate(c.date, primary.end);
-					if (isStart) lane.classList.add('round-left');
-					if (isEnd) lane.classList.add('round-right');
-					lane.textContent = isStart ? `${member.name} · ${primary.title}` : '';
-				} else {
-					lane.style.background = 'transparent';
+				const laneCount = memberLaneCount[idx] || 1;
+				for (let laneIdx = 0; laneIdx < laneCount; laneIdx++) {
+					const ev = schedule.find(
+						(e) => e.memberIndex === idx && e.lane === laneIdx && c.date >= e.start && c.date <= e.end
+					);
+					const lane = document.createElement('div');
+					lane.className = 'lane';
+					if (ev) {
+						lane.style.background = member.color;
+						const isStart = sameDate(c.date, ev.start);
+						const isEnd = sameDate(c.date, ev.end);
+						if (isStart) lane.classList.add('round-left');
+						if (isEnd) lane.classList.add('round-right');
+						lane.textContent = isStart ? `${member.name} · ${ev.title}` : '';
+					} else {
+						lane.style.background = 'transparent';
+					}
+					lanes.appendChild(lane);
 				}
-				lanes.appendChild(lane);
-
-				dayEvents.slice(1).forEach((ev) => {
-					const extraLane = document.createElement('div');
-					extraLane.className = 'lane round-left round-right';
-					extraLane.style.background = member.color;
-					extraLane.textContent = `${member.name} · ${ev.title}`;
-					lanes.appendChild(extraLane);
-				});
 			});
 		}
 		cell.appendChild(lanes);
