@@ -7,5 +7,9 @@ const CALENDAR_DATA = {
 		{ name: '용훈', color: '#10b981' },
 		{ name: '용수', color: '#f59e0b' },
 	],
-	schedule: [],
+	schedule: [
+		{ member: '승준', title: 'AI크롤링HTML', start: '2026-07-13', end: '2026-07-20' },
+		{ member: '용수', title: '즉시결제,연체내역', start: '2026-07-13', end: '2026-07-16' },
+		{ member: '용훈', title: '공마데', start: '2026-07-13', end: '2026-07-16' },
+	],
 };
