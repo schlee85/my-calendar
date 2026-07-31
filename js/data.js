@@ -24,5 +24,8 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 즉시결제,연체내역-재산출', start: '2026-07-23', end: '2026-07-28' },
 		{ member: '승준', title: '[SR] WON페이 팝업', start: '2026-07-22', end: '2026-07-24' },
 		{ member: '승준', title: '[SR] 미성년자 비대면', start: '2026-07-23', end: '2026-07-24' },
+		{ member: '용수', title: '[EV] 카드의정석2 SUPER', start: '2026-07-27', end: '2026-07-29' },
+		{ member: '용훈', title: '[EV] 다시한번 챌린지', start: '2026-07-27', end: '2026-07-29' },
+		{ member: '용훈', title: '[EV] 카드의정석2 DAILY', start: '2026-07-27', end: '2026-07-29' },
 	],
 };
