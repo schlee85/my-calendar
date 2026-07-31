@@ -12,5 +12,9 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '즉시결제,연체내역', start: '2026-07-13', end: '2026-07-16' },
 		{ member: '용훈', title: '공마데', start: '2026-07-13', end: '2026-07-16' },
 		{ member: '용수', title: '카드 - 오하CHECK', start: '2026-07-15', end: '2026-07-20' },
+		{ member: '용훈', title: '통합CPS', start: '2026-07-15', end: '2026-07-20' },
+		{ member: '승찬', title: '새소식admin', start: '2026-07-16', end: '2026-07-20' },
+		{ member: '용수', title: '영문메뉴', start: '2026-07-16', end: '2026-07-20' },
+		{ member: '승준', title: '이벤트 - 마스터카드 트래블 리워드', start: '2026-07-20', end: '2026-07-22' },
 	],
 };
