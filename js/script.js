@@ -102,45 +102,87 @@ function render() {
 	weeks.forEach((week) => {
 		const inMonthDates = week.filter((c) => !c.out).map((c) => c.date);
 
-		// 이번 주에 걸리는 일정만 모아 "담당자 순서 -> 산출일(마감일)이 가까운 순"으로 정렬한 뒤,
-		// 겹치지 않는 가장 낮은 줄부터 채워나갑니다. 이렇게 하면
-		//   - 담당자 순서대로 쌓이는 기본 정렬은 유지되고
-		//   - 앞 담당자가 이번 주에 일정이 없으면 그 자리를 뒷사람 막대가 그대로 채우고
-		//   - 한 사람의 여러 일정도 서로 붙어서 쌓이되, 그 안에서는 마감일이 가까운 것부터 쌓입니다.
-		// 다만 줄 번호는 "이번 주" 기준으로 다시 계산되므로, 여러 주에 걸친 막대는
-		// 주가 바뀌는 경계에서 줄이 한 칸 정도 옮겨질 수 있습니다.
+		// 이번 주에 걸리는 일정만 모아 담당자 순서대로 줄을 배정합니다. 규칙:
+		//   - 겹치지만 않으면 한 줄을 여러 담당자가 나눠 쓸 수 있습니다.
+		//   - 이미 배정된 일정은 절대 다시 옮기지 않습니다 (뒤에 새로 생기는 일정 때문에
+		//     이미 화면에 나오고 있는 막대 위치가 바뀌면 안 되므로).
+		//   - 같은 날 새로 시작하는 일정이 여럿이면, 그 담당자가 이미 확보한 범위 안의 빈 줄을
+		//     먼저 채우고, 모자라면 위/아래로 한 줄씩 넓혀가며(가까운 쪽부터) 자리를 찾은 뒤,
+		//     마감일이 빠른 일정부터 그 중 가장 위쪽 자리에 배정합니다. 그래서 이미 진행 중이던
+		//     일정은 자리를 지키고, 새로 시작하는 일정들끼리 마감일 순으로 그 위/아래 빈 자리를
+		//     채우게 됩니다.
 		const weekEvents = schedule.filter((ev) => inMonthDates.some((date) => date >= ev.start && date <= ev.end));
-		weekEvents.sort((a, b) => a.memberIndex - b.memberIndex || a.end - b.end);
 
-		const rowEnds = [];
-		const rowOwner = [];
-		const weekRow = new Map();
 		const weekSegmentStart = new Map();
 		weekEvents.forEach((ev) => {
 			const datesInRange = inMonthDates.filter((date) => date >= ev.start && date <= ev.end);
 			weekSegmentStart.set(ev, datesInRange[0]);
-
-			// 1) 같은 담당자가 쓰던 줄 중 비어있는 걸 최우선으로 재사용 (그 중 가장 최근에 끝난 줄)
-			//    -> 한 사람의 여러 막대가 서로 떨어지지 않고 붙어서 쌓임.
-			let row = -1;
-			let latestEnd = null;
-			rowEnds.forEach((end, idx) => {
-				if (rowOwner[idx] === ev.memberIndex && end < ev.start && (latestEnd === null || end > latestEnd)) {
-					latestEnd = end;
-					row = idx;
-				}
-			});
-			// 2) 같은 담당자 줄이 없으면, 다른 담당자가 비운 줄 중 가장 앞줄을 채움
-			//    -> 앞 담당자가 그 기간에 일정이 없으면 뒷사람 막대가 그 자리를 채움.
-			if (row === -1) row = rowEnds.findIndex((end) => end < ev.start);
-			// 3) 그래도 없으면 새 줄
-			if (row === -1) row = rowEnds.length;
-
-			rowEnds[row] = ev.end;
-			rowOwner[row] = ev.memberIndex;
-			weekRow.set(ev, row);
 		});
-		const rowCount = Math.max(rowEnds.length, 1);
+
+		const rowOccupied = []; // rowOccupied[row] = 그 줄에 이미 배치된 일정들의 {start, end} 목록
+		const weekRow = new Map();
+		function rowIsFreeFor(row, start, end) {
+			const occ = rowOccupied[row];
+			return !occ || !occ.some((r) => start <= r.end && end >= r.start);
+		}
+		function occupyRow(row, ev) {
+			(rowOccupied[row] || (rowOccupied[row] = [])).push({ start: ev.start, end: ev.end });
+		}
+
+		MEMBERS.forEach((member, idx) => {
+			const memberEvents = weekEvents
+				.filter((ev) => ev.memberIndex === idx)
+				.sort((a, b) => a.start - b.start || a.end - b.end);
+			if (!memberEvents.length) return;
+
+			let minRow = null;
+			let maxRow = null;
+
+			// 시작일이 같은 일정끼리 묶어서 한 번에 처리
+			const batches = [];
+			memberEvents.forEach((ev) => {
+				const last = batches[batches.length - 1];
+				if (last && sameDate(last[0].start, ev.start)) last.push(ev);
+				else batches.push([ev]);
+			});
+
+			batches.forEach((batch) => {
+				const batchStart = batch[0].start;
+				const batchMaxEnd = new Date(Math.max(...batch.map((ev) => ev.end.getTime())));
+				const needed = batch.length;
+				const slots = [];
+
+				if (minRow !== null) {
+					for (let r = minRow; r <= maxRow && slots.length < needed; r++) {
+						if (rowIsFreeFor(r, batchStart, batchMaxEnd)) slots.push(r);
+					}
+				}
+				let up = minRow === null ? -1 : minRow - 1;
+				let down = maxRow === null ? 0 : maxRow + 1;
+				while (slots.length < needed) {
+					if (up >= 0) {
+						if (rowIsFreeFor(up, batchStart, batchMaxEnd)) slots.push(up);
+						up--;
+					}
+					if (slots.length >= needed) break;
+					if (rowIsFreeFor(down, batchStart, batchMaxEnd)) slots.push(down);
+					down++;
+				}
+
+				slots.sort((a, b) => a - b);
+				const sortedBatch = [...batch].sort((a, b) => a.end - b.end);
+
+				sortedBatch.forEach((ev, i) => {
+					const row = slots[i];
+					weekRow.set(ev, row);
+					occupyRow(row, ev);
+					minRow = minRow === null ? row : Math.min(minRow, row);
+					maxRow = maxRow === null ? row : Math.max(maxRow, row);
+				});
+			});
+		});
+
+		const rowCount = Math.max(rowOccupied.length, 1);
 		const eventsByRow = Array.from({ length: rowCount }, (_, row) =>
 			weekEvents.filter((ev) => weekRow.get(ev) === row)
 		);
