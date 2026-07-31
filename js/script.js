@@ -29,14 +29,19 @@ const schedule = CALENDAR_DATA.schedule
 const memberLaneEnds = {};
 schedule.forEach((ev) => {
 	const laneEnds = memberLaneEnds[ev.memberIndex] || (memberLaneEnds[ev.memberIndex] = []);
-	let laneIdx = laneEnds.findIndex((end) => end < ev.start);
+	// 비어있는 줄 중 "가장 최근에 끝난" 줄을 재사용 (번호가 작은 줄을 무조건 우선하면
+	// 훨씬 이전에 끝난 일정 자리로 배정돼 방금 끝난 일정과 이어지는 느낌이 안 남)
+	let laneIdx = -1;
+	let latestEnd = null;
+	laneEnds.forEach((end, idx) => {
+		if (end < ev.start && (latestEnd === null || end > latestEnd)) {
+			latestEnd = end;
+			laneIdx = idx;
+		}
+	});
 	if (laneIdx === -1) laneIdx = laneEnds.length;
 	laneEnds[laneIdx] = ev.end;
 	ev.lane = laneIdx;
-});
-const memberLaneCount = {};
-schedule.forEach((ev) => {
-	memberLaneCount[ev.memberIndex] = Math.max(memberLaneCount[ev.memberIndex] || 1, ev.lane + 1);
 });
 
 const today = new Date();
@@ -107,73 +112,104 @@ function render() {
 		cursor.setDate(cursor.getDate() + 1);
 	}
 
-	cells.forEach((c) => {
-		const cell = document.createElement('div');
-		cell.className = 'cell' + (c.out ? ' out' : '');
+	const weeks = [];
+	for (let i = 0; i < cells.length; i += 5) {
+		weeks.push(cells.slice(i, i + 5));
+	}
 
-		const isToday = !c.out && sameDate(c.date, today);
-		const isSelected = !c.out && sameDate(c.date, selectedDate);
-		if (isToday) cell.classList.add('today');
-		if (isSelected) cell.classList.add('selected');
-
-		const head = document.createElement('div');
-		head.className = 'cell-head';
-
-		const num = document.createElement('div');
-		num.className = 'date-num';
-		num.textContent = c.date.getDate();
-		head.appendChild(num);
-
-		const holidayName = !c.out && KR_HOLIDAYS[dateKey(c.date)];
-		if (holidayName) {
-			cell.classList.add('holiday-cell');
-			if (!isToday) num.classList.add('holiday');
-			const holidayLabel = document.createElement('span');
-			holidayLabel.className = 'holiday-label';
-			holidayLabel.textContent = holidayName;
-			head.appendChild(holidayLabel);
-		}
-
-		cell.appendChild(head);
-
-		const lanes = document.createElement('div');
-		lanes.className = 'lanes';
-
-		if (!c.out) {
-			MEMBERS.forEach((member, idx) => {
-				const laneCount = memberLaneCount[idx] || 1;
-				for (let laneIdx = 0; laneIdx < laneCount; laneIdx++) {
-					const ev = schedule.find(
-						(e) => e.memberIndex === idx && e.lane === laneIdx && c.date >= e.start && c.date <= e.end
-					);
-					const lane = document.createElement('div');
-					lane.className = 'lane';
-					if (ev) {
-						lane.style.background = member.color;
-						const isStart = sameDate(c.date, ev.start);
-						const isEnd = sameDate(c.date, ev.end);
-						if (isStart) lane.classList.add('round-left');
-						if (isEnd) lane.classList.add('round-right');
-						lane.textContent = isStart ? `${member.name} · ${ev.title}` : '';
-					} else {
-						lane.style.background = 'transparent';
-					}
-					lanes.appendChild(lane);
-				}
-			});
-		}
-		cell.appendChild(lanes);
-
-		cell.addEventListener('click', () => {
-			selectedDate = new Date(c.date);
-			if (c.out) {
-				viewYear = selectedDate.getFullYear();
-				viewMonth = selectedDate.getMonth();
+	weeks.forEach((week) => {
+		const inMonthDates = week.filter((c) => !c.out).map((c) => c.date);
+		// 이 주(week)에 실제로 걸리는 레인 목록만 모음 — 번호만 크고 이 주엔 아무 일정도
+		// 없는 레인(예: 이미 끝난 일정 자리)은 아예 그리지 않아 빈 줄 간격이 안 생김.
+		const weekActiveLanes = {};
+		// 일정이 이 주(week) 이전부터 이어져 오는 경우, 이 주의 첫 날에도 라벨을 보여주기 위한 기준일.
+		const weekSegmentStart = new Map();
+		schedule.forEach((ev) => {
+			const datesInRange = inMonthDates.filter((date) => date >= ev.start && date <= ev.end);
+			if (datesInRange.length) {
+				const lanes = weekActiveLanes[ev.memberIndex] || (weekActiveLanes[ev.memberIndex] = []);
+				if (!lanes.includes(ev.lane)) lanes.push(ev.lane);
+				weekSegmentStart.set(ev, datesInRange[0]);
 			}
-			render();
+		});
+		Object.keys(weekActiveLanes).forEach((idx) => {
+			weekActiveLanes[idx].sort((a, b) => a - b);
 		});
 
-		grid.appendChild(cell);
+		week.forEach((c) => {
+			const cell = document.createElement('div');
+			cell.className = 'cell' + (c.out ? ' out' : '');
+
+			const isToday = !c.out && sameDate(c.date, today);
+			const isSelected = !c.out && sameDate(c.date, selectedDate);
+			if (isToday) cell.classList.add('today');
+			if (isSelected) cell.classList.add('selected');
+
+			const head = document.createElement('div');
+			head.className = 'cell-head';
+
+			const num = document.createElement('div');
+			num.className = 'date-num';
+			num.textContent = c.date.getDate();
+			head.appendChild(num);
+
+			const holidayName = !c.out && KR_HOLIDAYS[dateKey(c.date)];
+			if (holidayName) {
+				cell.classList.add('holiday-cell');
+				if (!isToday) num.classList.add('holiday');
+				const holidayLabel = document.createElement('span');
+				holidayLabel.className = 'holiday-label';
+				holidayLabel.textContent = holidayName;
+				head.appendChild(holidayLabel);
+			}
+
+			cell.appendChild(head);
+
+			const lanes = document.createElement('div');
+			lanes.className = 'lanes';
+
+			if (!c.out) {
+				MEMBERS.forEach((member, idx) => {
+					const activeLanes = weekActiveLanes[idx] && weekActiveLanes[idx].length ? weekActiveLanes[idx] : [0];
+					activeLanes.forEach((laneIdx) => {
+						const ev = schedule.find(
+							(e) => e.memberIndex === idx && e.lane === laneIdx && c.date >= e.start && c.date <= e.end
+						);
+						const lane = document.createElement('div');
+						lane.className = 'lane';
+						if (ev) {
+							lane.style.background = member.color;
+							const isStart = sameDate(c.date, ev.start);
+							const isEnd = sameDate(c.date, ev.end);
+							const isWeekSegmentStart = sameDate(c.date, weekSegmentStart.get(ev));
+							if (isStart) lane.classList.add('round-left');
+							if (isEnd) lane.classList.add('round-right');
+							if (isWeekSegmentStart) {
+								const laneText = document.createElement('span');
+								laneText.className = 'lane-text';
+								laneText.textContent = `${member.name} · ${ev.title}`;
+								lane.appendChild(laneText);
+							}
+						} else {
+							lane.style.background = 'transparent';
+						}
+						lanes.appendChild(lane);
+					});
+				});
+			}
+			cell.appendChild(lanes);
+
+			cell.addEventListener('click', () => {
+				selectedDate = new Date(c.date);
+				if (c.out) {
+					viewYear = selectedDate.getFullYear();
+					viewMonth = selectedDate.getMonth();
+				}
+				render();
+			});
+
+			grid.appendChild(cell);
+		});
 	});
 
 	renderEventList();
