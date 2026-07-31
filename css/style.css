@@ -225,12 +225,12 @@ body {
 	gap: 3px;
 }
 .lane {
-	height: 24px;
+	height: 28px;
 	margin: 0 -8px;
 	font-size: 11px;
 	font-weight: 500;
 	color: white;
-	padding: 2px 5px;
+	padding: 3px 5px;
 	display: flex;
 	align-items: center;
 	overflow: hidden;
@@ -376,10 +376,10 @@ body {
 		font-size: 8px;
 	}
 	.lane {
-		height: 20px;
+		height: 24px;
 		font-size: 10px;
 		margin: 0 -4px;
-		padding: 1px 3px;
+		padding: 2px 3px;
 	}
 	.lane-text {
 		line-height: 10px;
