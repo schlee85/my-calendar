@@ -18,5 +18,10 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[이벤트] 마스터카드 트래블 리워드', start: '2026-07-20', end: '2026-07-22' },
 		{ member: '용수', title: '[SR] 가상계좌 복사', start: '2026-07-21', end: '2026-07-24' },
 		{ member: '용훈', title: '[SR] 카카오톡', start: '2026-07-21', end: '2026-07-24' },
+		{ member: '승준', title: '[카드] EVERYDAY CHECK', start: '2026-07-22', end: '2026-07-27' },
+		{ member: '용훈', title: '[이벤트] NOL유니버스', start: '2026-07-22', end: '2026-07-27' },
+		{ member: '용훈', title: '[이벤트] 마이리얼트립', start: '2026-07-22', end: '2026-07-27' },
+		{ member: '용수', title: '[SR] 즉시결제,연체내역-재산', start: '2026-07-23', end: '2026-07-28' },
+		{ member: '승준', title: '[SR] WON페이 팝업', start: '2026-07-22', end: '2026-07-24' },
 	],
 };
