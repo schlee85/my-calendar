@@ -72,7 +72,9 @@ function renderLegend() {
 }
 
 function eventsForDate(dateObj) {
-	return schedule.filter((ev) => dateObj >= ev.start && dateObj <= ev.end);
+	return schedule
+		.filter((ev) => dateObj >= ev.start && dateObj <= ev.end)
+		.sort((a, b) => a.memberIndex - b.memberIndex || a.lane - b.lane);
 }
 
 function render() {
@@ -187,7 +189,7 @@ function render() {
 							if (isWeekSegmentStart) {
 								const laneText = document.createElement('span');
 								laneText.className = 'lane-text';
-								laneText.textContent = `${member.name} · ${ev.title}`;
+								laneText.textContent = ev.title;
 								lane.appendChild(laneText);
 							}
 						} else {
