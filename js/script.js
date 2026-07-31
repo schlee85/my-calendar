@@ -202,7 +202,16 @@ function renderEventList() {
 		li.appendChild(dot);
 		const span = document.createElement('span');
 		span.textContent = `${member.name} · ${ev.title}`;
+		if (sameDate(selectedDate, ev.end)) {
+			span.classList.add('deadline-text');
+		}
 		li.appendChild(span);
+		if (sameDate(selectedDate, ev.end)) {
+			const badge = document.createElement('span');
+			badge.className = 'badge';
+			badge.textContent = '산출일';
+			li.appendChild(badge);
+		}
 		eventList.appendChild(li);
 	});
 }
