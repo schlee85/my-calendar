@@ -11,5 +11,6 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: 'AI크롤링HTML', start: '2026-07-13', end: '2026-07-20' },
 		{ member: '용수', title: '즉시결제,연체내역', start: '2026-07-13', end: '2026-07-16' },
 		{ member: '용훈', title: '공마데', start: '2026-07-13', end: '2026-07-16' },
+		{ member: '용수', title: '카드 - 오하CHECK', start: '2026-07-15', end: '2026-07-20' },
 	],
 };
