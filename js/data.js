@@ -23,5 +23,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[EV] 마이리얼트립', start: '2026-07-22', end: '2026-07-27' },
 		{ member: '용수', title: '[SR] 즉시결제,연체내역-재산출', start: '2026-07-23', end: '2026-07-28' },
 		{ member: '승준', title: '[SR] WON페이 팝업', start: '2026-07-22', end: '2026-07-24' },
+		{ member: '승준', title: '[SR] 미성년자 비대면', start: '2026-07-23', end: '2026-07-24' },
 	],
 };
