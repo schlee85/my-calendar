@@ -106,11 +106,10 @@ function render() {
 		//   - 겹치지만 않으면 한 줄을 여러 담당자가 나눠 쓸 수 있습니다.
 		//   - 이미 배정된 일정은 절대 다시 옮기지 않습니다 (뒤에 새로 생기는 일정 때문에
 		//     이미 화면에 나오고 있는 막대 위치가 바뀌면 안 되므로).
-		//   - 같은 날 새로 시작하는 일정이 여럿이면, 그 담당자가 이미 확보한 범위 안의 빈 줄을
-		//     먼저 채우고, 모자라면 위/아래로 한 줄씩 넓혀가며(가까운 쪽부터) 자리를 찾은 뒤,
-		//     마감일이 빠른 일정부터 그 중 가장 위쪽 자리에 배정합니다. 그래서 이미 진행 중이던
-		//     일정은 자리를 지키고, 새로 시작하는 일정들끼리 마감일 순으로 그 위/아래 빈 자리를
-		//     채우게 됩니다.
+		//   - 같은 날 새로 시작하는 일정이 여럿이면, "지금 이 시점에 아직 진행 중인(=이 담당자의
+		//     현재 활성 줄)" 자리와 가장 가까운 빈 줄부터 채웁니다. 즉 위쪽이라서 무조건 우선이
+		//     아니라, 현재 진행 중인 막대 바로 옆(위/아래)에 붙는 빈 자리를 우선으로 씁니다.
+		//     그 후보 자리들 중에서는 마감일이 빠른 일정부터 더 위쪽 자리에 배정합니다.
 		const weekEvents = schedule.filter((ev) => inMonthDates.some((date) => date >= ev.start && date <= ev.end));
 
 		const weekSegmentStart = new Map();
@@ -150,26 +149,46 @@ function render() {
 				const batchStart = batch[0].start;
 				const batchMaxEnd = new Date(Math.max(...batch.map((ev) => ev.end.getTime())));
 				const needed = batch.length;
-				const slots = [];
 
+				// 지금 이 시점에 아직 진행 중인(비어있지 않은) 이 담당자의 줄 = 기준점
+				const anchorRows = [];
 				if (minRow !== null) {
-					for (let r = minRow; r <= maxRow && slots.length < needed; r++) {
-						if (rowIsFreeFor(r, batchStart, batchMaxEnd)) slots.push(r);
+					for (let r = minRow; r <= maxRow; r++) {
+						if (!rowIsFreeFor(r, batchStart, batchMaxEnd)) anchorRows.push(r);
 					}
-				}
-				let up = minRow === null ? -1 : minRow - 1;
-				let down = maxRow === null ? 0 : maxRow + 1;
-				while (slots.length < needed) {
-					if (up >= 0) {
-						if (rowIsFreeFor(up, batchStart, batchMaxEnd)) slots.push(up);
-						up--;
-					}
-					if (slots.length >= needed) break;
-					if (rowIsFreeFor(down, batchStart, batchMaxEnd)) slots.push(down);
-					down++;
 				}
 
-				slots.sort((a, b) => a - b);
+				// 빈 자리 후보를 두 그룹으로 모은다: 이미 확보한 범위 "안"의 빈 줄(자기 막대들
+				// 사이에 끼워넣을 수 있는 자리) vs 그 범위 "밖"으로 넓혀야 하는 빈 줄.
+				// 안쪽 자리를 항상 먼저 쓰고, 그래도 모자랄 때만 바깥쪽으로 넓힙니다.
+				const internalCandidates = [];
+				if (minRow !== null) {
+					for (let r = minRow; r <= maxRow; r++) {
+						if (rowIsFreeFor(r, batchStart, batchMaxEnd)) internalCandidates.push(r);
+					}
+				}
+				const externalCandidates = [];
+				const baseUp = minRow === null ? 0 : minRow;
+				for (let dist = 1; dist <= 20 && externalCandidates.length < needed + 10; dist++) {
+					const r = baseUp - dist;
+					if (r >= 0 && rowIsFreeFor(r, batchStart, batchMaxEnd)) externalCandidates.push(r);
+				}
+				const baseDown = maxRow === null ? -1 : maxRow;
+				for (let dist = 1; dist <= 20 && externalCandidates.length < needed + 10; dist++) {
+					const r = baseDown + dist;
+					if (rowIsFreeFor(r, batchStart, batchMaxEnd)) externalCandidates.push(r);
+				}
+
+				// 각 그룹 안에서는 기준점(anchorRows)과 가장 가까운 빈 자리부터 우선 사용.
+				// 기준점이 없으면(이 담당자가 처음 등장하는 경우) 위쪽(작은 번호) 자리부터 채운다.
+				function distanceToAnchor(row) {
+					if (!anchorRows.length) return row;
+					return Math.min(...anchorRows.map((a) => Math.abs(a - row)));
+				}
+				internalCandidates.sort((a, b) => distanceToAnchor(a) - distanceToAnchor(b) || a - b);
+				externalCandidates.sort((a, b) => distanceToAnchor(a) - distanceToAnchor(b) || a - b);
+				const candidates = [...internalCandidates, ...externalCandidates];
+				const slots = candidates.slice(0, needed).sort((a, b) => a - b);
 				const sortedBatch = [...batch].sort((a, b) => a.end - b.end);
 
 				sortedBatch.forEach((ev, i) => {
