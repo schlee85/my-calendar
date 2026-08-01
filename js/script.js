@@ -36,6 +36,7 @@ const eventList = document.getElementById('eventList');
 const selectedLabel = document.getElementById('selectedLabel');
 const weekSummary = document.getElementById('weekSummary');
 const memoSection = document.getElementById('memoSection');
+const memoLabel_el = document.getElementById('memoLabel');
 const memoList = document.getElementById('memoList');
 const memoSchedule = MEMO_DATA.map((m) => ({
 	text: m.text,
@@ -71,9 +72,7 @@ function renderLegend() {
 }
 
 function eventsForDate(dateObj) {
-	return schedule
-		.filter((ev) => dateObj >= ev.start && dateObj <= ev.end)
-		.sort((a, b) => a.memberIndex - b.memberIndex || a.end - b.end);
+	return schedule.filter((ev) => dateObj >= ev.start && dateObj <= ev.end).sort((a, b) => a.memberIndex - b.memberIndex || a.end - b.end);
 }
 
 function render() {
@@ -142,9 +141,7 @@ function render() {
 		}
 
 		MEMBERS.forEach((member, idx) => {
-			const memberEvents = weekEvents
-				.filter((ev) => ev.memberIndex === idx)
-				.sort((a, b) => a.start - b.start || a.end - b.end);
+			const memberEvents = weekEvents.filter((ev) => ev.memberIndex === idx).sort((a, b) => a.start - b.start || a.end - b.end);
 			if (!memberEvents.length) return;
 
 			let minRow = null;
@@ -348,7 +345,7 @@ function renderWeekSummary() {
 
 	const fmt = (d) => `${d.getMonth() + 1}/${d.getDate()}`;
 	const label = document.createElement('h2');
-	label.textContent = `${fmt(monday)} ~ ${fmt(friday)} 완료 일감`;
+	label.textContent = `${fmt(monday)} ~ ${fmt(friday)} 완료 예정`;
 	weekSummary.appendChild(label);
 
 	if (completed.length === 0) {
@@ -365,10 +362,12 @@ function renderWeekSummary() {
 		});
 		const chips = document.createElement('div');
 		chips.className = 'week-summary-chips';
-		Object.entries(counts).forEach(([cat, count]) => {
+		const ORDER = ['SR', 'EV', 'CD'];
+		const sorted = [...ORDER.filter((c) => counts[c]), ...Object.keys(counts).filter((c) => !ORDER.includes(c))];
+		sorted.forEach((cat) => {
 			const chip = document.createElement('span');
 			chip.className = 'week-summary-chip';
-			chip.textContent = `${cat} ${count}건`;
+			chip.textContent = `${cat} ${counts[cat]}건`;
 			chips.appendChild(chip);
 		});
 		weekSummary.appendChild(chips);
@@ -381,6 +380,7 @@ function renderEventList() {
 	memoList.innerHTML = '';
 	if (dateMemos.length > 0) {
 		memoSection.style.display = '';
+		memoLabel_el.textContent = `${selectedDate.getFullYear()}년 ${selectedDate.getMonth() + 1}월 ${selectedDate.getDate()}일 메모`;
 		dateMemos.forEach((m) => {
 			const li = document.createElement('li');
 			li.textContent = memoLabel(m, selectedDate);
