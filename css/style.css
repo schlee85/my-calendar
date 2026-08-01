@@ -275,6 +275,11 @@ body {
 	border-top-right-radius: var(--radius);
 	border-bottom-right-radius: var(--radius);
 }
+.bar-holiday-overlay {
+	background: rgba(255, 255, 255, 0.7);
+	pointer-events: none;
+	z-index: 3;
+}
 .bar:not(.round-right) {
 	clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
 }

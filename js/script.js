@@ -272,6 +272,35 @@ function render() {
 			bar.appendChild(barText);
 
 			barsEl.appendChild(bar);
+
+			datesInRange.forEach((date) => {
+				if (!KR_HOLIDAYS[dateKey(date)]) return;
+				const colIdx = week.findIndex((c) => sameDate(c.date, date));
+				if (colIdx === -1) return;
+				const overlay = document.createElement('div');
+				overlay.className = 'bar-holiday-overlay';
+				overlay.style.gridColumn = `${colIdx + 1}`;
+				overlay.style.gridRow = `${weekRow.get(ev) + 1}`;
+
+				const isFirst = colIdx === colStart;
+				const isLast = colIdx === colEnd;
+				const leftArrow = isFirst && !sameDate(segStart, ev.start);
+				const rightArrow = isLast && !sameDate(segEnd, ev.end);
+				const leftRound = isFirst && sameDate(segStart, ev.start);
+				const rightRound = isLast && sameDate(segEnd, ev.end);
+
+				if (leftArrow && rightArrow) {
+					overlay.style.clipPath = 'polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%)';
+				} else if (leftArrow) {
+					overlay.style.clipPath = 'polygon(8px 0, 100% 0, 100% 100%, 8px 100%, 0 50%)';
+				} else if (rightArrow) {
+					overlay.style.clipPath = 'polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%)';
+				}
+				if (leftRound) overlay.style.marginLeft = 'var(--bar-gap)';
+				if (rightRound) overlay.style.marginRight = 'var(--bar-gap)';
+
+				barsEl.appendChild(overlay);
+			});
 		});
 
 		weekEl.appendChild(barsEl);
