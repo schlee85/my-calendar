@@ -288,9 +288,16 @@ function render() {
 			if (sameDate(segStart, ev.start)) bar.classList.add('round-left');
 			if (sameDate(segEnd, ev.end)) bar.classList.add('round-right');
 
+			const catMatch = ev.title.match(/^\[([^\]]+)\]\s*/);
+			if (catMatch) {
+				const badge = document.createElement('span');
+				badge.className = `bar-badge bar-badge--${catMatch[1].toLowerCase()}`;
+				badge.textContent = catMatch[1];
+				bar.appendChild(badge);
+			}
 			const barText = document.createElement('span');
 			barText.className = 'bar-text';
-			barText.textContent = ev.title;
+			barText.textContent = catMatch ? ev.title.slice(catMatch[0].length) : ev.title;
 			bar.appendChild(barText);
 
 			barsEl.appendChild(bar);
@@ -367,7 +374,13 @@ function renderWeekSummary() {
 		sorted.forEach((cat) => {
 			const chip = document.createElement('span');
 			chip.className = 'week-summary-chip';
-			chip.textContent = `${cat} ${counts[cat]}건`;
+			const badge = document.createElement('span');
+			badge.className = `bar-badge bar-badge--${cat.toLowerCase()}`;
+			badge.textContent = cat;
+			chip.appendChild(badge);
+			const countText = document.createElement('span');
+			countText.textContent = ` ${counts[cat]}건`;
+			chip.appendChild(countText);
 			chips.appendChild(chip);
 		});
 		weekSummary.appendChild(chips);

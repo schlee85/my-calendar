@@ -254,6 +254,19 @@ body {
 	align-items: center;
 	overflow: hidden;
 }
+.bar-badge {
+	font-size: 9px;
+	font-weight: 700;
+	border-radius: 3px;
+	padding: 1px 4px;
+	flex-shrink: 0;
+	letter-spacing: 0.02em;
+	color: white;
+}
+.bar-badge--sr { background: #000; }
+.bar-badge--ev { background: #fff; color: rgba(0,0,0,0.75); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.8); }
+.bar-badge--cd { background: #fff; color: rgba(0,0,0,0.75); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.8); }
+.bar-badge + .bar-text { margin-left: 5px; }
 .bar-text {
 	width: 100%;
 	min-width: 0;
@@ -299,14 +312,14 @@ body {
 .week-summary-chips {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 6px;
+	gap: 12px;
 }
 .week-summary-chip {
 	font-size: 12px;
 	font-weight: 500;
-	background: rgba(0, 0, 0, 0.06);
-	border-radius: 12px;
-	padding: 3px 10px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
 }
 .footer-panel {
 	border-top: 1px solid var(--border);
