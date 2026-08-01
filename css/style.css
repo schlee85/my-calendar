@@ -103,17 +103,15 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 5px;
-	border: 1px solid rgba(25, 118, 210, 0.5);
+	border: 1.5px solid rgba(25, 118, 210, 0.5);
 	background: transparent;
 	color: var(--accent);
 	padding: 0 16px;
 	height: 32px;
-	border-radius: var(--radius);
+	border-radius: 999px;
 	cursor: pointer;
 	font-size: 13px;
 	font-weight: 500;
-	text-transform: uppercase;
-	letter-spacing: 0.02857em;
 	white-space: nowrap;
 	transition: background-color 0.15s ease;
 }
