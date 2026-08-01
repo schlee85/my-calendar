@@ -13,27 +13,27 @@
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
-		<h1 class="page-title">우리카드 운영 퍼블팀 캘린더</h1>
-
 		<div class="app">
-			<div class="toolbar">
-				<div class="nav">
-					<button id="prevBtn" aria-label="이전 달">
-						<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-							<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-						</svg>
-					</button>
-					<h2 id="monthLabel"></h2>
-					<button id="nextBtn" aria-label="다음 달">
-						<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-							<path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
-						</svg>
-					</button>
+			<div class="calendar-header">
+				<div class="toolbar">
+					<div class="nav">
+						<button id="prevBtn" aria-label="이전 달">
+							<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+								<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+							</svg>
+						</button>
+						<h2 id="monthLabel"></h2>
+						<button id="nextBtn" aria-label="다음 달">
+							<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+								<path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+							</svg>
+						</button>
+					</div>
+					<button class="today-btn" id="todayBtn">오늘</button>
 				</div>
-				<button class="today-btn" id="todayBtn">오늘</button>
-			</div>
 
-			<div class="legend" id="legend"></div>
+				<div class="legend" id="legend"></div>
+			</div>
 
 			<div class="weekdays">
 				<div>월</div>

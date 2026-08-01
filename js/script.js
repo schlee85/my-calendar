@@ -100,7 +100,7 @@ function render() {
 	}
 
 	weeks.forEach((week) => {
-		const inMonthDates = week.filter((c) => !c.out).map((c) => c.date);
+		const inMonthDates = week.map((c) => c.date);
 
 		// 이번 주에 걸리는 일정만 모아 담당자 순서대로 줄을 배정합니다. 규칙:
 		//   - 겹치지만 않으면 한 줄을 여러 담당자가 나눠 쓸 수 있습니다.
@@ -111,12 +111,6 @@ function render() {
 		//     아니라, 현재 진행 중인 막대 바로 옆(위/아래)에 붙는 빈 자리를 우선으로 씁니다.
 		//     그 후보 자리들 중에서는 마감일이 빠른 일정부터 더 위쪽 자리에 배정합니다.
 		const weekEvents = schedule.filter((ev) => inMonthDates.some((date) => date >= ev.start && date <= ev.end));
-
-		const weekSegmentStart = new Map();
-		weekEvents.forEach((ev) => {
-			const datesInRange = inMonthDates.filter((date) => date >= ev.start && date <= ev.end);
-			weekSegmentStart.set(ev, datesInRange[0]);
-		});
 
 		const rowOccupied = []; // rowOccupied[row] = 그 줄에 이미 배치된 일정들의 {start, end} 목록
 		const weekRow = new Map();
@@ -202,13 +196,14 @@ function render() {
 		});
 
 		const rowCount = Math.max(rowOccupied.length, 1);
-		const eventsByRow = Array.from({ length: rowCount }, (_, row) =>
-			weekEvents.filter((ev) => weekRow.get(ev) === row)
-		);
 
-		week.forEach((c) => {
+		const weekEl = document.createElement('div');
+		weekEl.className = 'week';
+
+		week.forEach((c, colIdx) => {
 			const cell = document.createElement('div');
 			cell.className = 'cell' + (c.out ? ' out' : '');
+			cell.style.gridColumn = `${colIdx + 1}`;
 
 			const isToday = !c.out && sameDate(c.date, today);
 			const isSelected = !c.out && sameDate(c.date, selectedDate);
@@ -235,36 +230,6 @@ function render() {
 
 			cell.appendChild(head);
 
-			const lanes = document.createElement('div');
-			lanes.className = 'lanes';
-
-			if (!c.out) {
-				for (let row = 0; row < rowCount; row++) {
-					const ev = eventsByRow[row].find((e) => c.date >= e.start && c.date <= e.end);
-					const lane = document.createElement('div');
-					lane.className = 'lane';
-					if (ev) {
-						const member = MEMBERS[ev.memberIndex];
-						lane.style.background = member.color;
-						const isStart = sameDate(c.date, ev.start);
-						const isEnd = sameDate(c.date, ev.end);
-						const isWeekSegmentStart = sameDate(c.date, weekSegmentStart.get(ev));
-						if (isStart) lane.classList.add('round-left');
-						if (isEnd) lane.classList.add('round-right');
-						if (isWeekSegmentStart) {
-							const laneText = document.createElement('span');
-							laneText.className = 'lane-text';
-							laneText.textContent = ev.title;
-							lane.appendChild(laneText);
-						}
-					} else {
-						lane.style.background = 'transparent';
-					}
-					lanes.appendChild(lane);
-				}
-			}
-			cell.appendChild(lanes);
-
 			cell.addEventListener('click', () => {
 				selectedDate = new Date(c.date);
 				if (c.out) {
@@ -274,8 +239,43 @@ function render() {
 				render();
 			});
 
-			grid.appendChild(cell);
+			weekEl.appendChild(cell);
 		});
+
+		// 담당자 막대: 요일 셀 하나하나가 아니라, 이번 주에 걸친 구간 전체를 진짜 하나의
+		// 요소로 그려서 (grid-column을 span) 날짜 경계마다 끊기지 않는 실제 막대로 만듭니다.
+		const barsEl = document.createElement('div');
+		barsEl.className = 'week-bars';
+		barsEl.style.gridTemplateRows = `repeat(${rowCount}, var(--lane-h))`;
+
+		weekEvents.forEach((ev) => {
+			const datesInRange = inMonthDates.filter((date) => date >= ev.start && date <= ev.end);
+			if (!datesInRange.length) return;
+			const segStart = datesInRange[0];
+			const segEnd = datesInRange[datesInRange.length - 1];
+			const colStart = week.findIndex((c) => sameDate(c.date, segStart));
+			const colEnd = week.findIndex((c) => sameDate(c.date, segEnd));
+			if (colStart === -1 || colEnd === -1) return;
+
+			const bar = document.createElement('div');
+			bar.className = 'bar';
+			const member = MEMBERS[ev.memberIndex];
+			bar.style.background = member.color;
+			bar.style.gridColumn = `${colStart + 1} / ${colEnd + 2}`;
+			bar.style.gridRow = `${weekRow.get(ev) + 1}`;
+			if (sameDate(segStart, ev.start)) bar.classList.add('round-left');
+			if (sameDate(segEnd, ev.end)) bar.classList.add('round-right');
+
+			const barText = document.createElement('span');
+			barText.className = 'bar-text';
+			barText.textContent = ev.title;
+			bar.appendChild(barText);
+
+			barsEl.appendChild(bar);
+		});
+
+		weekEl.appendChild(barsEl);
+		grid.appendChild(weekEl);
 	});
 
 	renderEventList();
