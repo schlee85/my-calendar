@@ -363,17 +363,17 @@ body {
 		gap: 2px;
 	}
 	.nav button {
-		width: 30px;
-		height: 30px;
+		width: 40px;
+		height: 40px;
 	}
 	.nav button svg {
-		width: 16px;
-		height: 16px;
+		width: 20px;
+		height: 20px;
 	}
 	.today-btn {
-		padding: 0 8px;
-		height: 26px;
-		font-size: 11px;
+		padding: 0 16px;
+		height: 32px;
+		font-size: 13px;
 	}
 	.legend {
 		gap: 6px;
