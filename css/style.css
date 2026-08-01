@@ -99,6 +99,9 @@ body {
 .today-btn {
 	grid-column: 3;
 	justify-self: end;
+	display: flex;
+	align-items: center;
+	gap: 5px;
 	border: 1px solid rgba(25, 118, 210, 0.5);
 	background: transparent;
 	color: var(--accent);

@@ -422,8 +422,15 @@ function renderEventList() {
 		dot.className = 'dot';
 		dot.style.background = member.color;
 		li.appendChild(dot);
+		const catMatch = ev.title.match(/^\[([^\]]+)\]\s*/);
+		if (catMatch) {
+			const badge = document.createElement('span');
+			badge.className = `bar-badge bar-badge--${catMatch[1].toLowerCase()}`;
+			badge.textContent = catMatch[1];
+			li.appendChild(badge);
+		}
 		const span = document.createElement('span');
-		span.textContent = `${member.name} · ${ev.title}`;
+		span.textContent = `${member.name} · ${catMatch ? ev.title.slice(catMatch[0].length) : ev.title}`;
 		if (sameDate(selectedDate, ev.end)) {
 			span.classList.add('deadline-text');
 		}
