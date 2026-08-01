@@ -291,6 +291,23 @@ body {
 	clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%);
 }
 
+.week-summary {
+	margin-top: 16px;
+	padding-top: 16px;
+	border-top: 1px solid var(--border);
+}
+.week-summary-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.week-summary-chip {
+	font-size: 12px;
+	font-weight: 500;
+	background: rgba(0, 0, 0, 0.06);
+	border-radius: 12px;
+	padding: 3px 10px;
+}
 .footer-panel {
 	border-top: 1px solid var(--border);
 	padding: 16px 24px 24px;
@@ -338,6 +355,33 @@ body {
 	padding: 2px 8px;
 	border-radius: 10px;
 	white-space: nowrap;
+}
+.memo-section {
+	margin-top: 16px;
+	padding-top: 16px;
+	border-top: 1px solid var(--border);
+}
+.memo-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.memo-list li {
+	font-size: 13px;
+	padding: 6px 8px;
+	border-radius: var(--radius);
+	color: var(--muted);
+	background: rgba(0, 0, 0, 0.03);
+}
+.memo-dot {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--accent);
+	flex-shrink: 0;
 }
 .empty-note {
 	font-size: 13px;

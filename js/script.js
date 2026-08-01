@@ -34,6 +34,25 @@ const grid = document.getElementById('grid');
 const legend = document.getElementById('legend');
 const eventList = document.getElementById('eventList');
 const selectedLabel = document.getElementById('selectedLabel');
+const weekSummary = document.getElementById('weekSummary');
+const memoSection = document.getElementById('memoSection');
+const memoList = document.getElementById('memoList');
+const memoSchedule = MEMO_DATA.map((m) => ({
+	text: m.text,
+	start: parseDate(m.start),
+	end: parseDate(m.end),
+}));
+
+function memosForDate(dateObj) {
+	return memoSchedule.filter((m) => dateObj >= m.start && dateObj <= m.end);
+}
+
+function memoLabel(m, dateObj) {
+	const totalDays = Math.round((m.end - m.start) / 86400000) + 1;
+	if (totalDays <= 1) return m.text;
+	const dayNum = Math.round((dateObj - m.start) / 86400000) + 1;
+	return `${m.text} (${dayNum}/${totalDays})`;
+}
 
 function renderLegend() {
 	legend.innerHTML = '';
@@ -218,6 +237,12 @@ function render() {
 			num.textContent = c.date.getDate();
 			head.appendChild(num);
 
+			if (memosForDate(c.date).length > 0) {
+				const dot = document.createElement('span');
+				dot.className = 'memo-dot';
+				head.appendChild(dot);
+			}
+
 			const holidayName = !c.out && KR_HOLIDAYS[dateKey(c.date)];
 			if (holidayName) {
 				cell.classList.add('holiday-cell');
@@ -310,7 +335,60 @@ function render() {
 	renderEventList();
 }
 
+function renderWeekSummary() {
+	const offset = (selectedDate.getDay() + 6) % 7;
+	const monday = new Date(selectedDate);
+	monday.setDate(selectedDate.getDate() - offset);
+	const friday = new Date(monday);
+	friday.setDate(monday.getDate() + 4);
+
+	const completed = schedule.filter((ev) => ev.end >= monday && ev.end <= friday);
+
+	weekSummary.innerHTML = '';
+
+	const fmt = (d) => `${d.getMonth() + 1}/${d.getDate()}`;
+	const label = document.createElement('h2');
+	label.textContent = `${fmt(monday)} ~ ${fmt(friday)} 완료 일감`;
+	weekSummary.appendChild(label);
+
+	if (completed.length === 0) {
+		const empty = document.createElement('p');
+		empty.className = 'empty-note';
+		empty.textContent = '완료된 일감이 없습니다.';
+		weekSummary.appendChild(empty);
+	} else {
+		const counts = {};
+		completed.forEach((ev) => {
+			const match = ev.title.match(/^\[([^\]]+)\]/);
+			const cat = match ? match[1] : '기타';
+			counts[cat] = (counts[cat] || 0) + 1;
+		});
+		const chips = document.createElement('div');
+		chips.className = 'week-summary-chips';
+		Object.entries(counts).forEach(([cat, count]) => {
+			const chip = document.createElement('span');
+			chip.className = 'week-summary-chip';
+			chip.textContent = `${cat} ${count}건`;
+			chips.appendChild(chip);
+		});
+		weekSummary.appendChild(chips);
+	}
+}
+
 function renderEventList() {
+	renderWeekSummary();
+	const dateMemos = memosForDate(selectedDate);
+	memoList.innerHTML = '';
+	if (dateMemos.length > 0) {
+		memoSection.style.display = '';
+		dateMemos.forEach((m) => {
+			const li = document.createElement('li');
+			li.textContent = memoLabel(m, selectedDate);
+			memoList.appendChild(li);
+		});
+	} else {
+		memoSection.style.display = 'none';
+	}
 	const y = selectedDate.getFullYear();
 	const m = selectedDate.getMonth();
 	const d = selectedDate.getDate();
@@ -369,5 +447,6 @@ document.getElementById('todayBtn').addEventListener('click', () => {
 	selectedDate = new Date(today);
 	render();
 });
+
 renderLegend();
 render();
