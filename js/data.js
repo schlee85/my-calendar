@@ -31,5 +31,6 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[EV] 카드의정석2 ROUTINE', start: '2026-07-28', end: '2026-07-30' },
 		{ member: '용훈', title: '[EV] 캐리비안베이', start: '2026-07-28', end: '2026-07-29' },
 		{ member: '승찬', title: '[SR] 테스트 일정', start: '2026-08-03', end: '2026-08-03' },
+		{ member: '승찬', title: '랜덤작업', start: '2026-08-04', end: '2026-08-05' },
 	],
 };
