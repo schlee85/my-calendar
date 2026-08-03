@@ -464,7 +464,7 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 document.getElementById('todayBtn').addEventListener('click', () => {
 	viewYear = today.getFullYear();
 	viewMonth = today.getMonth();
-	selectedDate = new Date(today);
+	selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 	render();
 });
 
