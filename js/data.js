@@ -14,7 +14,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[CD] 오하CHECK', start: '2026-07-15', end: '2026-07-20' },
 		{ member: '용훈', title: '[SR] 통합CPS', start: '2026-07-15', end: '2026-07-20' },
 		{ member: '승찬', title: '[SR] 새소식admin', start: '2026-07-16', end: '2026-07-20' },
-		{ member: '용수', title: '[SR] 영문메뉴', start: '2026-07-16', end: '2026-07-20' },
+		{ member: '용수', title: '[SR] 영문메뉴', start: '2026-07-15', end: '2026-07-20' },
 		{ member: '승준', title: '[EV] 마스터카드 트래블 리워드', start: '2026-07-20', end: '2026-07-22' },
 		{ member: '용수', title: '[SR] 가상계좌 복사', start: '2026-07-21', end: '2026-07-24' },
 		{ member: '용훈', title: '[SR] 카카오톡', start: '2026-07-21', end: '2026-07-24' },
