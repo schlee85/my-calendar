@@ -40,5 +40,11 @@ const CALENDAR_DATA = {
 		{ member: '승찬', title: '[EV] 휴일 매출증대', start: '2026-07-31', end: '2026-08-03' },
 		{ member: '용수', title: '[CD] 카드의정석2 SPIKE', start: '2026-07-31', end: '2026-08-04' },
 		{ member: '용훈', title: '[SR] 운전면허 암호일련번호 안내 개선', start: '2026-07-31', end: '2026-08-05' },
+		{ member: '승준', title: '[SR] THE SHOPPER 무이자할부', start: '2026-08-04', end: '2026-08-07' },
+		{ member: '승준', title: '[SR] AI크롤링HTML', start: '2026-08-04', end: '2026-08-05' },
+		{ member: '용수', title: '[SR] 즉시결제 개선', start: '2026-08-05', end: '2026-08-10' },
+		{ member: '용수', title: '[SR] 대체발급 갱신안내장 개선', start: '2026-08-05', end: '2026-08-07' },
+		{ member: '용수', title: '[SR] 즉시결제 - 재재산출', start: '2026-08-05', end: '2026-08-07' },
+		{ member: '용훈', title: '[CD] 바디프렌드 platinum', start: '2026-08-10', end: '2026-08-12' },
 	],
 };
