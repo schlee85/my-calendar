@@ -49,5 +49,7 @@ const CALENDAR_DATA = {
 		{ member: '승찬', title: '[SR] 배구단 마이크로 사이트', start: '2026-08-06', end: '2026-08-21' },
 		{ member: '용훈', title: '[EV] WON트래블 8월 할인코드', start: '2026-08-04', end: '2026-08-05' },
 		{ member: '용훈', title: '[EV] 카드의정석2 DAILY 수정', start: '2026-08-05', end: '2026-08-06' },
+		{ member: '용훈', title: '[EV] 2026 모모콘 홍보', start: '2026-08-05', end: '2026-08-05' },
+		{ member: '승찬', title: '[EV] AIA보장분석 이벤트', start: '2026-08-05', end: '2026-08-05' },
 	],
 };
