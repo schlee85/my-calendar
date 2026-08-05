@@ -46,7 +46,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 대체발급 갱신안내장 개선', start: '2026-08-05', end: '2026-08-07' },
 		{ member: '용수', title: '[SR] 즉시결제 - 재재산출', start: '2026-08-05', end: '2026-08-07' },
 		{ member: '용훈', title: '[CD] 바디프렌드 platinum', start: '2026-08-10', end: '2026-08-12' },
-		{ member: '용훈', title: '[SR] 배구단 마이크로 사이트', start: '2026-08-06', end: '2026-08-21' },
+		{ member: '용훈', title: '[SR] 배구단 마이크로 사이트 - 1차', start: '2026-08-06', end: '2026-08-21' },
 		{ member: '용훈', title: '[EV] WON트래블 8월 할인코드', start: '2026-08-04', end: '2026-08-05' },
 		{ member: '용훈', title: '[EV] 카드의정석2 DAILY 수정', start: '2026-08-05', end: '2026-08-06' },
 		{ member: '용훈', title: '[EV] 2026 모모콘 홍보', start: '2026-08-05', end: '2026-08-05' },
