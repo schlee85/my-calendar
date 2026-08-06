@@ -54,6 +54,5 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[EV] ALL 우리카드 페스타', start: '2026-08-06', end: '2026-08-07' },
 		{ member: '용수', title: '[SR] 혜택 메인 내 피비즈 데일리카페 아이콘', start: '2026-08-10', end: '2026-08-11' },
 		{ member: '용훈', title: '[SR] 우리v클럽 안내페이지 배너', start: '2026-08-07', end: '2026-08-10' },
-		{ member: '승찬', title: '[SR] 샘플업무', start: '2026-08-26', end: '2026-08-26' },
 	],
 };
