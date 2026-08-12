@@ -60,5 +60,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[EV] 웨스틴조선서울 호텔V클럽', start: '2026-08-12', end: '2026-08-14' },
 		{ member: '승찬', title: '[SR] QA 결함 D_120', start: '2026-08-11', end: '2026-08-12' },
 		{ member: '용훈', title: '[EV] 아고다 8월 프로모션', start: '2026-08-12', end: '2026-08-12' },
+		{ member: '승찬', title: '[SR] 간편발급조회 프로세스 신설', start: '2026-08-31', end: '2026-09-04' },
 	],
 };
