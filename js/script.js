@@ -57,7 +57,7 @@ function memoLabel(m, dateObj) {
 
 function renderLegend() {
 	legend.innerHTML = '';
-	MEMBERS.forEach((member) => {
+	MEMBERS.filter((member) => member.name !== '미정').forEach((member) => {
 		const item = document.createElement('div');
 		item.className = 'legend-item';
 		const dot = document.createElement('span');
