@@ -64,7 +64,7 @@ const CALENDAR_DATA = {
 		{ member: '미정', title: '[SR] 간편발급조회 프로세스 신설', start: '2026-09-14', end: '2026-09-18' },
 		{ member: '용훈', title: '[EV] 올리브영 올데이혜택', start: '2026-08-13', end: '2026-08-14' },
 		{ member: '승준', title: '[SR] 공항 노출 로직 변경', start: '2026-08-14', end: '2026-08-18' },
-		{ member: '승준', title: '[SR] 마이메인(4)', start: '2026-08-18', end: '2026-08-28' },
+		{ member: '승준', title: '[SR] 마이메인(3)', start: '2026-08-24', end: '2026-09-04' },
 		{ member: '용수', title: '[EV] 2026년 우리V클럽 추가신청 등급안내', start: '2026-08-18', end: '2026-08-19' },
 		{ member: '용훈', title: '[SR] 동의서 재징구 바텀시트 신설', start: '2026-08-19', end: '2026-08-24' },
 		{ member: '미정', title: '[SR] 상품상세 GEO', start: '2026-08-21', end: '2026-08-25' },
