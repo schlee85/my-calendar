@@ -78,7 +78,7 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] WON트래블 진입점 확대', start: '2026-08-24', end: '2026-08-25' },
 		{ member: '용수', title: '[CD] 카드의정석2 PAY', start: '2026-08-19', end: '2026-08-21' },
 		{ member: '용수', title: '[EV] WON트래블 챌린지 프로모션', start: '2026-08-20', end: '2026-08-21' },
-		{ member: '용수', title: '[SR] 상품상세 GEO 대응', start: '2026-08-21', end: '2026-08-25' },
+		{ member: '용수', title: '[SR] 상품상세 GEO 대응', start: '2026-08-21', end: '2026-08-26' },
 		{ member: '용수', title: '[SR] 이용관리-명세서 화면 개선', start: '2026-08-24', end: '2026-08-25' },
 		{ member: '용훈', title: '[CD] 카드의정석2 SOLID', start: '2026-08-26', end: '2026-08-28' },
 	],
