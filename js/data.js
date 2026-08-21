@@ -81,5 +81,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 상품상세 GEO 대응', start: '2026-08-21', end: '2026-08-26' },
 		{ member: '용수', title: '[SR] 이용관리-명세서 화면 개선', start: '2026-08-24', end: '2026-08-25' },
 		{ member: '용훈', title: '[CD] 카드의정석2 SOLID', start: '2026-08-26', end: '2026-08-28' },
+		{ member: '용수', title: '[EV] 디지털 정기결제 캐시백', start: '2026-08-26', end: '2026-08-27' },
+		{ member: '승준', title: '[SR] AI 크롤링 HTML 3차', start: '2026-08-31', end: '2026-09-01' },
 	],
 };
