@@ -83,5 +83,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[CD] 카드의정석2 SOLID', start: '2026-08-26', end: '2026-08-28' },
 		{ member: '용수', title: '[EV] 디지털 정기결제 캐시백', start: '2026-08-26', end: '2026-08-27' },
 		{ member: '승준', title: '[SR] AI 크롤링 HTML 3차', start: '2026-08-31', end: '2026-09-01' },
+		{ member: '용수', title: '[EV] 트래블월렛 X WON트래블', start: '2026-08-27', end: '2026-08-28' },
 	],
 };
