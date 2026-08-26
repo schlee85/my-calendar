@@ -84,5 +84,10 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[EV] 디지털 정기결제 캐시백', start: '2026-08-26', end: '2026-08-27' },
 		{ member: '승준', title: '[SR] AI 크롤링 HTML 3차', start: '2026-08-31', end: '2026-09-01' },
 		{ member: '용수', title: '[EV] 트래블월렛 X WON트래블', start: '2026-08-27', end: '2026-08-28' },
+		{ member: '용수', title: '[EV] 트래블월렛 체크카드 이용유도', start: '2026-08-27', end: '2026-08-28' },
+		{ member: '승찬', title: '[EV] WON트래블 9월 항공 쿠폰', start: '2026-08-27', end: '2026-08-28' },
+		{ member: '승찬', title: '[EV] 웨스틴조선서울 아리아 호텔 뷔페 할인', start: '2026-08-27', end: '2026-08-28' },
+		{ member: '승찬', title: '[SR] 카드 둘러보기 가로형 플레이트', start: '2026-08-31', end: '2026-09-01' },
+		{ member: '미정', title: '[SR] 장기카드대출 즉시결제 개선', start: '2026-09-09', end: '2026-09-15' },
 	],
 };
