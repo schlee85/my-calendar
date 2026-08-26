@@ -70,7 +70,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 금융메인(1)', start: '2026-08-24', end: '2026-09-04' },
 		{ member: '용수', title: '[SR] 카드메인-우카스픽(1),둘러보기(1)', start: '2026-08-31', end: '2026-09-04' },
 		{ member: '승준', title: '[SR] 혜택메인(1)', start: '2026-09-02', end: '2026-09-08' },
-		{ member: '용수', title: '[SR] 카드전체보기(1)', start: '2026-09-07', end: '2026-09-11' },
 		{ member: '승준', title: '[EV] 위비트래블 해외 프로모션', start: '2026-08-19', end: '2026-08-20' },
 		{ member: '승준', title: '[SR] 온라인인증 UI개선', start: '2026-08-19', end: '2026-08-19' },
 		{ member: '승준', title: '[SR] WON페이 오프라인 결제 인증 간소화', start: '2026-08-20', end: '2026-08-21' },
