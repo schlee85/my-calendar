@@ -106,5 +106,9 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 소비캘린더 결제금액수정', start: '2026-09-15', end: '2026-09-18' },
 		{ member: '용수', title: '[EV] 다이소몰 꾹 청구할인', start: '2026-09-15', end: '2026-09-16' },
 		{ member: '용수', title: '[SR] 소비캘린더 내 자산 연결하기 기능', start: '2026-09-16', end: '2026-09-18' },
+		{ member: '용훈', title: '[CD] 카드의정석2 SUPER', start: '2026-09-07', end: '2026-09-08' },
+		{ member: '승준', title: '[CD] THE SHOPPER', start: '2026-09-09', end: '2026-09-11' },
+		{ member: '승준', title: '[SR] 온라인결제 인증완료 브릿지', start: '2026-09-21', end: '2026-09-23' },
+		{ member: '용수', title: '[SR] 재발급시 브랜드변경', start: '2026-09-21', end: '2026-09-23' },
 	],
 };
