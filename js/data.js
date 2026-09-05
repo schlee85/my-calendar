@@ -97,7 +97,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[EV] CGV 핫도그콤보', start: '2026-09-04', end: '2026-09-04' },
 		{ member: '용수', title: '[EV] 여신티켓 즉시할인', start: '2026-09-07', end: '2026-09-07' },
 		{ member: '용훈', title: '[EV] 위비트래블 해외 프로모션', start: '2026-09-08', end: '2026-09-08' },
-		{ member: '승준', title: '[CD] 카드의정석 POINT 주거래+', start: '2026-09-09', end: '2026-09-11' },
+		{ member: '승준', title: '[CD] 카드의정석 POINT 주거래+', start: '2026-09-17', end: '2026-09-18' },
 		{ member: '승준', title: '[SR] 유니버셜 카드신청 내 리볼빙 동의 풀팝업', start: '2026-09-09', end: '2026-09-14' },
 		{ member: '용훈', title: '[SR] 장기연체채권 소각 대상자 조회', start: '2026-09-09', end: '2026-09-15' },
 		{ member: '용수', title: '[EV] 우다페 ALL 우리카드 프로모션', start: '2026-09-09', end: '2026-09-09' },
