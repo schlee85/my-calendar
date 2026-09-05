@@ -16,6 +16,9 @@
 		<div class="app">
 			<div class="calendar-header">
 				<div class="toolbar">
+					<div class="toolbar-left">
+						<button class="stats-btn" id="statsBtn">통계</button>
+					</div>
 					<div class="nav">
 						<button id="prevBtn" aria-label="이전 달">
 							<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -29,7 +32,9 @@
 							</svg>
 						</button>
 					</div>
-					<button class="today-btn" id="todayBtn">오늘</button>
+					<div class="toolbar-right">
+						<button class="today-btn" id="todayBtn">오늘</button>
+					</div>
 				</div>
 
 				<div class="legend" id="legend"></div>
@@ -57,6 +62,16 @@
 		</div>
 
 		<footer class="app-footer">© 2026 SEUNGCHAN · v1.0</footer>
+
+		<div class="modal-overlay" id="statsModal">
+			<div class="modal">
+				<div class="modal-header">
+					<h2>작업자별 통계</h2>
+					<button class="modal-close" id="statsClose">✕</button>
+				</div>
+				<div class="modal-body" id="statsBody"></div>
+			</div>
+		</div>
 
 		<script src="js/data.js"></script>
 		<script src="js/memos.js"></script>

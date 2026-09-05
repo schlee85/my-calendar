@@ -300,6 +300,7 @@ function render() {
 			barText.textContent = catMatch ? ev.title.slice(catMatch[0].length) : ev.title;
 			bar.appendChild(barText);
 
+
 			barsEl.appendChild(bar);
 
 			datesInRange.forEach((date) => {
@@ -444,6 +445,143 @@ function renderEventList() {
 		eventList.appendChild(li);
 	});
 }
+
+let statsFilter = null; // null = 전체, {year, month} = 특정 월
+
+function renderStatsBody() {
+	const body = document.getElementById('statsBody');
+	body.innerHTML = '';
+
+	// 월 목록 추출 (종료일 기준)
+	const monthSet = new Set();
+	schedule.forEach((ev) => {
+		monthSet.add(`${ev.end.getFullYear()}-${ev.end.getMonth()}`);
+	});
+	const months = Array.from(monthSet)
+		.sort()
+		.map((key) => {
+			const [y, m] = key.split('-').map(Number);
+			return { year: y, month: m };
+		});
+
+	// 월 드롭다운
+	const filters = document.createElement('div');
+	filters.className = 'stats-filters';
+
+	const select = document.createElement('select');
+	select.className = 'stats-select';
+
+	const allOpt = document.createElement('option');
+	allOpt.value = '';
+	allOpt.textContent = '전체';
+	select.appendChild(allOpt);
+
+	months.forEach(({ year, month }) => {
+		const opt = document.createElement('option');
+		opt.value = `${year}-${month}`;
+		opt.textContent = `${year}년 ${month + 1}월`;
+		if (statsFilter && statsFilter.year === year && statsFilter.month === month) opt.selected = true;
+		select.appendChild(opt);
+	});
+
+	select.addEventListener('change', () => {
+		if (!select.value) {
+			statsFilter = null;
+		} else {
+			const [y, m] = select.value.split('-').map(Number);
+			statsFilter = { year: y, month: m };
+		}
+		renderStatsBody();
+	});
+
+	filters.appendChild(select);
+	body.appendChild(filters);
+
+	// 일정 필터링 (종료일 기준)
+	const filtered = statsFilter
+		? schedule.filter((ev) => ev.end.getFullYear() === statsFilter.year && ev.end.getMonth() === statsFilter.month)
+		: schedule;
+
+	// 테이블
+	const ORDER = ['SR', 'EV', 'CD'];
+	const table = document.createElement('table');
+	table.className = 'stats-table';
+
+	const colgroup = document.createElement('colgroup');
+	[28, 18, 18, 18, 18].forEach((w) => {
+		const col = document.createElement('col');
+		col.style.width = `${w}%`;
+		colgroup.appendChild(col);
+	});
+	table.appendChild(colgroup);
+
+	const thead = document.createElement('thead');
+	const headerRow = document.createElement('tr');
+	['작업자', 'SR', 'EV', 'CD', '합계'].forEach((h) => {
+		const th = document.createElement('th');
+		th.textContent = h;
+		headerRow.appendChild(th);
+	});
+	thead.appendChild(headerRow);
+	table.appendChild(thead);
+
+	const tbody = document.createElement('tbody');
+	MEMBERS.filter((m) => m.name !== '미정').forEach((member) => {
+		const memberIdx = MEMBERS.findIndex((m) => m.name === member.name);
+		const memberEvents = filtered.filter((ev) => ev.memberIndex === memberIdx);
+
+		const counts = {};
+		memberEvents.forEach((ev) => {
+			const match = ev.title.match(/^\[([^\]]+)\]/);
+			const cat = match ? match[1] : '기타';
+			counts[cat] = (counts[cat] || 0) + 1;
+		});
+		const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+		const tr = document.createElement('tr');
+
+		const tdName = document.createElement('td');
+		const dot = document.createElement('span');
+		dot.className = 'dot';
+		dot.style.background = member.color;
+		tdName.appendChild(dot);
+		tdName.appendChild(document.createTextNode(member.name));
+		tr.appendChild(tdName);
+
+		ORDER.forEach((cat) => {
+			const td = document.createElement('td');
+			td.textContent = `${counts[cat] || 0}건`;
+			tr.appendChild(td);
+		});
+
+		const tdTotal = document.createElement('td');
+		tdTotal.className = 'stats-total';
+		tdTotal.textContent = `${total}건`;
+		tr.appendChild(tdTotal);
+
+		tbody.appendChild(tr);
+	});
+	table.appendChild(tbody);
+	body.appendChild(table);
+}
+
+function openStatsModal() {
+	statsFilter = null;
+	renderStatsBody();
+	document.getElementById('statsModal').classList.add('open');
+	document.body.style.overflow = 'hidden';
+}
+
+function closeStatsModal() {
+	document.getElementById('statsModal').classList.remove('open');
+	document.body.style.overflow = '';
+}
+
+document.getElementById('statsBtn').addEventListener('click', openStatsModal);
+document.getElementById('statsClose').addEventListener('click', closeStatsModal);
+document.getElementById('statsModal').addEventListener('click', (e) => {
+	if (e.target === e.currentTarget) closeStatsModal();
+});
 
 document.getElementById('prevBtn').addEventListener('click', () => {
 	viewMonth--;
