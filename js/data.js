@@ -111,5 +111,6 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[CD] THE SHOPPER', start: '2026-09-09', end: '2026-09-11' },
 		{ member: '승준', title: '[SR] 온라인결제 인증완료 브릿지', start: '2026-09-21', end: '2026-09-23' },
 		{ member: '용수', title: '[SR] 재발급시 브랜드변경', start: '2026-09-21', end: '2026-09-23' },
+		{ member: '승준', title: '[EV] UPI 제주항공 청구할인', start: '2026-09-08', end: '2026-09-08' },
 	],
 };
