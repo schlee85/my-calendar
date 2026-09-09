@@ -208,6 +208,8 @@ body {
 .modal-body {
 	padding: 18px 20px;
 	background: #f1f5f9;
+	max-height: 80svh;
+	overflow-y: auto;
 }
 .stats-filters {
 	margin-bottom: 14px;
@@ -595,6 +597,28 @@ body {
 }
 
 @media (max-width: 600px) {
+	.modal-header {
+		padding: 13px 16px;
+	}
+	.modal-body {
+		padding: 12px 14px;
+		max-height: 78svh;
+	}
+	.stats-filters {
+		margin-bottom: 10px;
+	}
+	.stats-cards {
+		gap: 8px;
+	}
+	.stats-card {
+		padding: 10px 12px;
+	}
+	.stats-card-head {
+		margin-bottom: 7px;
+	}
+	.stats-bar-track {
+		margin-bottom: 7px;
+	}
 	body {
 		padding: 0;
 	}
