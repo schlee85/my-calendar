@@ -598,26 +598,42 @@ body {
 
 @media (max-width: 600px) {
 	.modal-header {
-		padding: 13px 16px;
+		padding: 11px 16px;
 	}
 	.modal-body {
-		padding: 12px 14px;
-		max-height: 78svh;
+		padding: 10px 12px;
+		max-height: 82svh;
 	}
 	.stats-filters {
-		margin-bottom: 10px;
+		margin-bottom: 8px;
+	}
+	.stats-select {
+		padding: 5px 10px;
+		font-size: 12px;
 	}
 	.stats-cards {
-		gap: 8px;
+		gap: 6px;
 	}
 	.stats-card {
-		padding: 10px 12px;
+		padding: 8px 12px;
 	}
 	.stats-card-head {
-		margin-bottom: 7px;
+		margin-bottom: 6px;
+	}
+	.stats-avatar {
+		width: 26px;
+		height: 26px;
+		font-size: 11px;
+	}
+	.stats-name {
+		font-size: 13px;
 	}
 	.stats-bar-track {
-		margin-bottom: 7px;
+		display: none;
+	}
+	.stats-cat-pill {
+		padding: 2px 8px;
+		font-size: 11px;
 	}
 	body {
 		padding: 0;
