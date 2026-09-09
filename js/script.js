@@ -473,7 +473,7 @@ function renderStatsBody() {
 
 	const allOpt = document.createElement('option');
 	allOpt.value = '';
-	allOpt.textContent = '전체';
+	allOpt.textContent = '전체 기간';
 	select.appendChild(allOpt);
 
 	months.forEach(({ year, month }) => {
@@ -502,34 +502,13 @@ function renderStatsBody() {
 		? schedule.filter((ev) => ev.end.getFullYear() === statsFilter.year && ev.end.getMonth() === statsFilter.month)
 		: schedule;
 
-	// 테이블
 	const ORDER = ['SR', 'EV', 'CD'];
-	const table = document.createElement('table');
-	table.className = 'stats-table';
+	const CAT_COLORS = { SR: '#6366f1', EV: '#10b981', CD: '#f59e0b' };
 
-	const colgroup = document.createElement('colgroup');
-	[28, 18, 18, 18, 18].forEach((w) => {
-		const col = document.createElement('col');
-		col.style.width = `${w}%`;
-		colgroup.appendChild(col);
-	});
-	table.appendChild(colgroup);
-
-	const thead = document.createElement('thead');
-	const headerRow = document.createElement('tr');
-	['작업자', 'SR', 'EV', 'CD', '합계'].forEach((h) => {
-		const th = document.createElement('th');
-		th.textContent = h;
-		headerRow.appendChild(th);
-	});
-	thead.appendChild(headerRow);
-	table.appendChild(thead);
-
-	const tbody = document.createElement('tbody');
-	MEMBERS.filter((m) => m.name !== '미정').forEach((member) => {
+	// 멤버별 집계
+	const memberData = MEMBERS.filter((m) => m.name !== '미정').map((member) => {
 		const memberIdx = MEMBERS.findIndex((m) => m.name === member.name);
 		const memberEvents = filtered.filter((ev) => ev.memberIndex === memberIdx);
-
 		const counts = {};
 		memberEvents.forEach((ev) => {
 			const match = ev.title.match(/^\[([^\]]+)\]/);
@@ -537,32 +516,70 @@ function renderStatsBody() {
 			counts[cat] = (counts[cat] || 0) + 1;
 		});
 		const total = Object.values(counts).reduce((a, b) => a + b, 0);
-
-		const tr = document.createElement('tr');
-
-		const tdName = document.createElement('td');
-		const dot = document.createElement('span');
-		dot.className = 'dot';
-		dot.style.background = member.color;
-		tdName.appendChild(dot);
-		tdName.appendChild(document.createTextNode(member.name));
-		tr.appendChild(tdName);
-
-		ORDER.forEach((cat) => {
-			const td = document.createElement('td');
-			td.textContent = `${counts[cat] || 0}건`;
-			tr.appendChild(td);
-		});
-
-		const tdTotal = document.createElement('td');
-		tdTotal.className = 'stats-total';
-		tdTotal.textContent = `${total}건`;
-		tr.appendChild(tdTotal);
-
-		tbody.appendChild(tr);
+		return { member, counts, total };
 	});
-	table.appendChild(tbody);
-	body.appendChild(table);
+
+	const maxTotal = Math.max(...memberData.map((d) => d.total), 1);
+
+	// 카드 렌더링
+	const cards = document.createElement('div');
+	cards.className = 'stats-cards';
+
+	memberData.forEach(({ member, counts, total }) => {
+		const card = document.createElement('div');
+		card.className = 'stats-card';
+
+		// 카드 헤더: 아바타 + 이름 + 합계 뱃지
+		const cardHead = document.createElement('div');
+		cardHead.className = 'stats-card-head';
+
+		const avatar = document.createElement('span');
+		avatar.className = 'stats-avatar';
+		avatar.style.background = member.color;
+		avatar.textContent = member.name[0];
+		cardHead.appendChild(avatar);
+
+		const nameEl = document.createElement('span');
+		nameEl.className = 'stats-name';
+		nameEl.textContent = member.name;
+		cardHead.appendChild(nameEl);
+
+		const totalBadge = document.createElement('span');
+		totalBadge.className = 'stats-total-badge';
+		totalBadge.textContent = `${total}건`;
+		cardHead.appendChild(totalBadge);
+
+		card.appendChild(cardHead);
+
+		// 진행 바
+		const barTrack = document.createElement('div');
+		barTrack.className = 'stats-bar-track';
+		const barFill = document.createElement('div');
+		barFill.className = 'stats-bar-fill';
+		barFill.style.width = `${(total / maxTotal) * 100}%`;
+		barFill.style.background = member.color;
+		barTrack.appendChild(barFill);
+		card.appendChild(barTrack);
+
+		// 카테고리 뱃지
+		const cats = document.createElement('div');
+		cats.className = 'stats-cats';
+		ORDER.forEach((cat) => {
+			const count = counts[cat] || 0;
+			const pill = document.createElement('span');
+			pill.className = 'stats-cat-pill';
+			pill.style.background = `${CAT_COLORS[cat]}18`;
+			pill.style.color = CAT_COLORS[cat];
+			pill.style.border = `1px solid ${CAT_COLORS[cat]}30`;
+			pill.innerHTML = `<b>${cat}</b> ${count}`;
+			cats.appendChild(pill);
+		});
+		card.appendChild(cats);
+
+		cards.appendChild(card);
+	});
+
+	body.appendChild(cards);
 }
 
 function openStatsModal() {
@@ -582,6 +599,11 @@ document.getElementById('statsClose').addEventListener('click', closeStatsModal)
 document.getElementById('statsModal').addEventListener('click', (e) => {
 	if (e.target === e.currentTarget) closeStatsModal();
 });
+
+const KST = 9 * 3600 * 1000;
+const projectStart = new Date('2026-07-01T00:00:00+09:00');
+const dayCount = Math.floor((Date.now() + KST) / 86400000) - Math.floor((projectStart.getTime() + KST) / 86400000) + 1;
+document.getElementById('dayCount').textContent = dayCount;
 
 document.getElementById('prevBtn').addEventListener('click', () => {
 	viewMonth--;
