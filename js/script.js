@@ -192,7 +192,10 @@ function render() {
 				// 각 그룹 안에서는 기준점(anchorRows)과 가장 가까운 빈 자리부터 우선 사용.
 				// 기준점이 없으면(이 담당자가 처음 등장하는 경우) 위쪽(작은 번호) 자리부터 채운다.
 				function distanceToAnchor(row) {
-					if (!anchorRows.length) return row;
+					if (!anchorRows.length) {
+						if (minRow !== null) return Math.min(Math.abs(row - minRow), Math.abs(row - maxRow));
+						return row;
+					}
 					return Math.min(...anchorRows.map((a) => Math.abs(a - row)));
 				}
 				internalCandidates.sort((a, b) => distanceToAnchor(a) - distanceToAnchor(b) || a - b);
