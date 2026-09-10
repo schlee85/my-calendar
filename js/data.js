@@ -113,5 +113,6 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 재발급시 브랜드변경', start: '2026-09-21', end: '2026-09-23' },
 		{ member: '승준', title: '[EV] UPI 제주항공 청구할인', start: '2026-09-08', end: '2026-09-08' },
 		{ member: '용수', title: '[SR] 자동납부 간편신청 서비스', start: '2026-09-10', end: '2026-09-11' },
+		{ member: '용훈', title: '[SR] 배구단 마이크로 사이트 - 2차', start: '2026-09-14', end: '2026-09-16' },
 	],
 };
