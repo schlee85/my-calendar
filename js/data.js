@@ -119,5 +119,11 @@ const CALENDAR_DATA = {
 		{ member: '승찬', title: '[SR] CPS 상품리스트 노출 개선', start: '2026-09-15', end: '2026-09-16' },
 		{ member: '용수', title: '[EV] 신용카드 동반성장상품권', start: '2026-09-16', end: '2026-09-16' },
 		{ member: '승준', title: '[EV] 카드의정석2 SUPER 호텔럭스', start: '2026-09-23', end: '2026-09-23' },
+		{ member: '승준', title: '[EV] 더중앙플러스', start: '2026-09-23', end: '2026-09-23' },
+		{ member: '용수', title: '[EV] 온라인 신규발급 캐시백', start: '2026-09-23', end: '2026-09-23' },
+		{ member: '용훈', title: '[SR] 통합CPS 상품리스트 개선 - 추가요건', start: '2026-09-23', end: '2026-09-23' },
+		{ member: '종민', title: '[CD] KG이니시스 우리카드', start: '2026-09-28', end: '2026-09-30' },
+		{ member: '용수', title: '[CD] 모두의충전 우리카드', start: '2026-09-29', end: '2026-09-30' },
+		{ member: '용수', title: '[CD] 모두의충전 AUTO 우리카드', start: '2026-09-29', end: '2026-09-30' },
 	],
 };
