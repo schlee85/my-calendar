@@ -117,5 +117,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 배구단 마이크로 사이트 - 2차', start: '2026-09-14', end: '2026-09-16' },
 		{ member: '승찬', title: '[EV] 우다페 5대 온라인몰 캐시백', start: '2026-09-11', end: '2026-09-11' },
 		{ member: '승찬', title: '[SR] CPS 상품리스트 노출 개선', start: '2026-09-15', end: '2026-09-16' },
+		{ member: '용수', title: '[EV] 신용카드 동반성장상품권', start: '2026-09-16', end: '2026-09-16' },
 	],
 };
