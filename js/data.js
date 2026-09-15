@@ -125,5 +125,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[CD] KG이니시스 우리카드', start: '2026-09-28', end: '2026-09-30' },
 		{ member: '용수', title: '[CD] 모두의충전 우리카드', start: '2026-09-29', end: '2026-09-30' },
 		{ member: '용수', title: '[CD] 모두의충전 AUTO 우리카드', start: '2026-09-29', end: '2026-09-30' },
+		{ member: '승준', title: '[SR] 제휴카드 프로모션 고객 응대화면', start: '2026-10-01', end: '2026-10-07' },
 	],
 };
