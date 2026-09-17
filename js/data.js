@@ -130,5 +130,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 카카오톡 추가 동의 신설', start: '2026-09-30', end: '2026-10-01' },
 		{ member: '용훈', title: '[SR] 멤버십 제휴사 포인트 신규', start: '2026-10-02', end: '2026-10-08' },
 		{ member: '용훈', title: '[SR] 배구단 프로모션 3차', start: '2026-10-12', end: '2026-10-16' },
+		{ member: '미정', title: '[SR] 스카이패스 회원검증', start: '2026-10-01', end: '2026-10-07' },
 	],
 };
