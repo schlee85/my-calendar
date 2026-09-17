@@ -126,5 +126,9 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[CD] 모두의충전 우리카드', start: '2026-09-29', end: '2026-09-30' },
 		{ member: '용수', title: '[CD] 모두의충전 AUTO 우리카드', start: '2026-09-29', end: '2026-09-30' },
 		{ member: '승준', title: '[SR] 제휴카드 프로모션 고객 응대화면', start: '2026-10-01', end: '2026-10-07' },
+		{ member: '승찬', title: '[EV] VISA GRAB 프로모션', start: '2026-09-18', end: '2026-09-18' },
+		{ member: '용훈', title: '[SR] 카카오톡 추가 동의 신설', start: '2026-09-30', end: '2026-10-01' },
+		{ member: '용훈', title: '[SR] 멤버십 제휴사 포인트 신규', start: '2026-10-02', end: '2026-10-08' },
+		{ member: '용훈', title: '[SR] 배구단 프로모션 3차', start: '2026-10-12', end: '2026-10-16' },
 	],
 };
