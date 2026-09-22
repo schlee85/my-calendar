@@ -135,5 +135,6 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 자산 상세 새로고침', start: '2026-09-18', end: '2026-09-18' },
 		{ member: '용수', title: '[SR] 분할납부 예약 추가', start: '2026-10-08', end: '2026-10-13' },
 		{ member: '승찬', title: '[SR] 유니버셜 카드신청 완료시 우다페 응모', start: '2026-09-18', end: '2026-09-18' },
+		{ member: '용수', title: '[EV] 카드의정석2 PAY 수정', start: '2026-09-28', end: '2026-09-28' },
 	],
 };
