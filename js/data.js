@@ -137,5 +137,7 @@ const CALENDAR_DATA = {
 		{ member: '승찬', title: '[SR] 유니버셜 카드신청 완료시 우다페 응모', start: '2026-09-18', end: '2026-09-18' },
 		{ member: '용수', title: '[EV] 카드의정석2 PAY 수정', start: '2026-09-28', end: '2026-09-28' },
 		{ member: '용훈', title: '[SR] 네이버페이 아웃링크', start: '2026-09-29', end: '2026-09-29' },
+		{ member: '종민', title: '[EV] 우다페 WON 트래블 할인', start: '2026-09-30', end: '2026-09-30' },
+		{ member: '종민', title: '[EV] WON트래블 호텔 기획전', start: '2026-09-30', end: '2026-09-30' },
 	],
 };
