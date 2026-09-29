@@ -139,5 +139,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 네이버페이 아웃링크', start: '2026-09-29', end: '2026-09-29' },
 		{ member: '용수', title: '[EV] 우다페 WON 트래블 할인', start: '2026-09-30', end: '2026-09-30' },
 		{ member: '용수', title: '[EV] WON트래블 호텔 기획전', start: '2026-09-30', end: '2026-09-30' },
+		{ member: '승찬', title: '[EV] 10월 트래블월렛', start: '2026-09-30', end: '2026-09-30' },
 	],
 };
