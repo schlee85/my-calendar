@@ -133,7 +133,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 스카이패스 회원검증', start: '2026-09-22', end: '2026-09-23' },
 		{ member: '승찬', title: '[EV] UPI 제주항공 청구할인', start: '2026-09-18', end: '2026-09-18' },
 		{ member: '용수', title: '[SR] 자산 상세 새로고침', start: '2026-09-18', end: '2026-09-18' },
-		{ member: '용수', title: '[SR] 분할납부 예약 추가', start: '2026-10-08', end: '2026-10-13' },
+		{ member: '용수', title: '[SR] 분할납부 예약 추가', start: '2026-10-01', end: '2026-10-07' },
 		{ member: '승찬', title: '[SR] 유니버셜 카드신청 완료시 우다페 응모', start: '2026-09-18', end: '2026-09-18' },
 		{ member: '용수', title: '[EV] 카드의정석2 PAY 수정', start: '2026-09-28', end: '2026-09-28' },
 		{ member: '용훈', title: '[SR] 네이버페이 아웃링크', start: '2026-09-29', end: '2026-09-29' },
