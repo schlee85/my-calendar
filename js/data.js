@@ -140,5 +140,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[EV] 우다페 WON 트래블 할인', start: '2026-09-30', end: '2026-09-30' },
 		{ member: '용수', title: '[EV] WON트래블 호텔 기획전', start: '2026-09-30', end: '2026-09-30' },
 		{ member: '승찬', title: '[EV] 10월 트래블월렛', start: '2026-09-30', end: '2026-09-30' },
+		{ member: '승준', title: '[SR] 카드의정석2 SPIKE', start: '2026-10-07', end: '2026-10-08' },
+		{ member: '용수', title: '[SR] 모바일웹 간소화', start: '2026-10-08', end: '2026-10-16' },
 	],
 };
