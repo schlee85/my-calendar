@@ -24,7 +24,8 @@ const schedule = CALENDAR_DATA.schedule
 	}))
 	.sort((a, b) => a.start - b.start);
 
-const today = new Date();
+const _now = new Date();
+const today = new Date(_now.getTime() + (_now.getTimezoneOffset() + 9 * 60) * 60000);
 let viewYear = today.getFullYear();
 let viewMonth = today.getMonth(); // 0-indexed
 let selectedDate = new Date(viewYear, viewMonth, today.getDate());
@@ -120,14 +121,8 @@ function render() {
 	weeks.forEach((week) => {
 		const inMonthDates = week.map((c) => c.date);
 
-		// 이번 주에 걸리는 일정만 모아 담당자 순서대로 줄을 배정합니다. 규칙:
-		//   - 겹치지만 않으면 한 줄을 여러 담당자가 나눠 쓸 수 있습니다.
-		//   - 이미 배정된 일정은 절대 다시 옮기지 않습니다 (뒤에 새로 생기는 일정 때문에
-		//     이미 화면에 나오고 있는 막대 위치가 바뀌면 안 되므로).
-		//   - 같은 날 새로 시작하는 일정이 여럿이면, "지금 이 시점에 아직 진행 중인(=이 담당자의
-		//     현재 활성 줄)" 자리와 가장 가까운 빈 줄부터 채웁니다. 즉 위쪽이라서 무조건 우선이
-		//     아니라, 현재 진행 중인 막대 바로 옆(위/아래)에 붙는 빈 자리를 우선으로 씁니다.
-		//     그 후보 자리들 중에서는 마감일이 빠른 일정부터 더 위쪽 자리에 배정합니다.
+		// 이번 주에 걸리는 일정을 시작일 → 담당자 순으로 정렬한 뒤,
+		// 각 일정에 대해 겹치지 않는 가장 위쪽(번호 작은) 레인을 first-fit으로 배정합니다.
 		const weekEvents = schedule.filter((ev) => inMonthDates.some((date) => date >= ev.start && date <= ev.end));
 
 		const rowOccupied = []; // rowOccupied[row] = 그 줄에 이미 배치된 일정들의 {start, end} 목록
@@ -140,78 +135,12 @@ function render() {
 			(rowOccupied[row] || (rowOccupied[row] = [])).push({ start: ev.start, end: ev.end });
 		}
 
-		MEMBERS.forEach((member, idx) => {
-			const memberEvents = weekEvents.filter((ev) => ev.memberIndex === idx).sort((a, b) => a.start - b.start || a.end - b.end);
-			if (!memberEvents.length) return;
-
-			let minRow = null;
-			let maxRow = null;
-
-			// 시작일이 같은 일정끼리 묶어서 한 번에 처리
-			const batches = [];
-			memberEvents.forEach((ev) => {
-				const last = batches[batches.length - 1];
-				if (last && sameDate(last[0].start, ev.start)) last.push(ev);
-				else batches.push([ev]);
-			});
-
-			batches.forEach((batch) => {
-				const batchStart = batch[0].start;
-				const batchMaxEnd = new Date(Math.max(...batch.map((ev) => ev.end.getTime())));
-				const needed = batch.length;
-
-				// 지금 이 시점에 아직 진행 중인(비어있지 않은) 이 담당자의 줄 = 기준점
-				const anchorRows = [];
-				if (minRow !== null) {
-					for (let r = minRow; r <= maxRow; r++) {
-						if (!rowIsFreeFor(r, batchStart, batchMaxEnd)) anchorRows.push(r);
-					}
-				}
-
-				// 빈 자리 후보를 두 그룹으로 모은다: 이미 확보한 범위 "안"의 빈 줄(자기 막대들
-				// 사이에 끼워넣을 수 있는 자리) vs 그 범위 "밖"으로 넓혀야 하는 빈 줄.
-				// 안쪽 자리를 항상 먼저 쓰고, 그래도 모자랄 때만 바깥쪽으로 넓힙니다.
-				const internalCandidates = [];
-				if (minRow !== null) {
-					for (let r = minRow; r <= maxRow; r++) {
-						if (rowIsFreeFor(r, batchStart, batchMaxEnd)) internalCandidates.push(r);
-					}
-				}
-				const externalCandidates = [];
-				const baseUp = minRow === null ? 0 : minRow;
-				for (let dist = 1; dist <= 20 && externalCandidates.length < needed + 10; dist++) {
-					const r = baseUp - dist;
-					if (r >= 0 && rowIsFreeFor(r, batchStart, batchMaxEnd)) externalCandidates.push(r);
-				}
-				const baseDown = maxRow === null ? -1 : maxRow;
-				for (let dist = 1; dist <= 20 && externalCandidates.length < needed + 10; dist++) {
-					const r = baseDown + dist;
-					if (rowIsFreeFor(r, batchStart, batchMaxEnd)) externalCandidates.push(r);
-				}
-
-				// 각 그룹 안에서는 기준점(anchorRows)과 가장 가까운 빈 자리부터 우선 사용.
-				// 기준점이 없으면(이 담당자가 처음 등장하는 경우) 위쪽(작은 번호) 자리부터 채운다.
-				function distanceToAnchor(row) {
-					if (!anchorRows.length) {
-						if (minRow !== null) return Math.min(Math.abs(row - minRow), Math.abs(row - maxRow));
-						return row;
-					}
-					return Math.min(...anchorRows.map((a) => Math.abs(a - row)));
-				}
-				internalCandidates.sort((a, b) => distanceToAnchor(a) - distanceToAnchor(b) || a - b);
-				externalCandidates.sort((a, b) => distanceToAnchor(a) - distanceToAnchor(b) || a - b);
-				const candidates = [...internalCandidates, ...externalCandidates];
-				const slots = candidates.slice(0, needed).sort((a, b) => a - b);
-				const sortedBatch = [...batch].sort((a, b) => a.end - b.end);
-
-				sortedBatch.forEach((ev, i) => {
-					const row = slots[i];
-					weekRow.set(ev, row);
-					occupyRow(row, ev);
-					minRow = minRow === null ? row : Math.min(minRow, row);
-					maxRow = maxRow === null ? row : Math.max(maxRow, row);
-				});
-			});
+		const sorted = [...weekEvents].sort((a, b) => a.start - b.start || a.memberIndex - b.memberIndex || a.end - b.end);
+		sorted.forEach((ev) => {
+			let row = 0;
+			while (!rowIsFreeFor(row, ev.start, ev.end)) row++;
+			weekRow.set(ev, row);
+			occupyRow(row, ev);
 		});
 
 		const rowCount = Math.max(rowOccupied.length, 1);
@@ -458,7 +387,7 @@ function renderStatsBody() {
 	// 월 목록 추출 (종료일 기준)
 	const monthSet = new Set();
 	schedule.forEach((ev) => {
-		monthSet.add(`${ev.end.getFullYear()}-${ev.end.getMonth()}`);
+		monthSet.add(`${ev.end.getFullYear()}-${String(ev.end.getMonth()).padStart(2, '0')}`);
 	});
 	const months = Array.from(monthSet)
 		.sort()
