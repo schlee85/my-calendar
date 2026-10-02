@@ -145,5 +145,8 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 자주묻는 질문 GEO', start: '2026-10-19', end: '2026-10-23' },
 		{ member: '용훈', title: '[SR] 다크패턴 카드신청', start: '2026-10-21', end: '2026-10-23' },
 		{ member: '미정', title: '[SR] 디지털 판대 대표서비스', start: '2026-10-26', end: '2026-11-04' },
+		{ member: '종민', title: '[EV] WON트래블 라이브방송', start: '2026-10-06', end: '2026-10-06' },
+		{ member: '용수', title: '[SR] 배구단 마이크로 사이트 - 3차', start: '2026-10-12', end: '2026-10-16' },
+		{ member: '종민', title: '[SR] PC홈페이지 로그인 개선', start: '2026-10-20', end: '2026-10-23' },
 	],
 };
