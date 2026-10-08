@@ -139,7 +139,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[EV] WON트래블 호텔 기획전', start: '2026-09-30', end: '2026-09-30' },
 		{ member: '승찬', title: '[EV] 10월 트래블월렛', start: '2026-09-30', end: '2026-09-30' },
 		{ member: '승준', title: '[SR] 카드의정석2 SPIKE', start: '2026-10-07', end: '2026-10-08' },
-		{ member: '용수', title: '[SR] 모바일웹 간소화', start: '2026-10-01', end: '2026-10-08' },
+		{ member: '용수', title: '[SR] 모바일웹 간소화', start: '2026-10-01', end: '2026-10-14' },
 		{ member: '용훈', title: '[SR] 스탭챌린지', start: '2026-10-12', end: '2026-10-20' },
 		{ member: '승준', title: '[SR] 스탭챌린지', start: '2026-10-13', end: '2026-10-16' },
 		{ member: '용수', title: '[SR] 자주묻는 질문 GEO', start: '2026-10-19', end: '2026-10-23' },
