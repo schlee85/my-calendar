@@ -148,5 +148,11 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] WON트래블 라이브방송', start: '2026-10-06', end: '2026-10-06' },
 		{ member: '용수', title: '[SR] 배구단 마이크로 사이트 - 3차', start: '2026-10-12', end: '2026-10-16' },
 		{ member: '종민', title: '[SR] PC홈페이지 로그인 개선', start: '2026-10-20', end: '2026-10-23' },
+		{ member: '종민', title: '[SR] 간편발급조회 테스트용', start: '2026-10-08', end: '2026-10-12' },
+		{ member: '종민', title: '[EV] 마이리얼트립 혜택모음', start: '2026-10-12', end: '2026-10-12' },
+		{ member: '종민', title: '[SR] 쇼핑 혜택+ 개선', start: '2026-10-19', end: '2026-10-21' },
+		{ member: '승준', title: '[SR] 이용알림서비스 우리V클럽', start: '2026-10-20', end: '2026-10-21' },
+		{ member: '승준', title: '[SR] 스카이패스 회원검증', start: '2026-10-22', end: '2026-10-28' },
+		{ member: '용수', title: '[SR] 즉시결제 개선 수정', start: '2026-10-21', end: '2026-10-22' },
 	],
 };
