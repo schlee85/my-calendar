@@ -154,5 +154,7 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[SR] 이용알림서비스 우리V클럽', start: '2026-10-20', end: '2026-10-21' },
 		{ member: '승준', title: '[SR] 스카이패스 회원검증', start: '2026-10-22', end: '2026-10-28' },
 		{ member: '용수', title: '[SR] 즉시결제 개선 수정', start: '2026-10-21', end: '2026-10-22' },
+		{ member: '승찬', title: '[SR] 금융 메인 결함', start: '2026-10-12', end: '2026-10-12' },
+		{ member: '승찬', title: '[SR] Self-FDS 오류', start: '2026-10-12', end: '2026-10-12' },
 	],
 };
