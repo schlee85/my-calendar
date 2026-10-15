@@ -158,5 +158,7 @@ const CALENDAR_DATA = {
 		{ member: '승찬', title: '[SR] Self-FDS 오류', start: '2026-10-12', end: '2026-10-12' },
 		{ member: '승준', title: '[SR] 카드QR 개편', start: '2026-10-20', end: '2026-10-21' },
 		{ member: '종민', title: '[EV] the OPUS 대고객', start: '2026-10-21', end: '2026-10-21' },
+		{ member: '미정', title: '[SR] 카드론 수수료 조회 개선', start: '2026-10-26', end: '2026-11-04' },
+		{ member: '승준', title: '[SR] 카드의정석2 ROUTINE GEO', start: '2026-10-29', end: '2026-11-03' },
 	],
 };
