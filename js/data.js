@@ -162,5 +162,8 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[SR] 카드의정석2 ROUTINE GEO', start: '2026-10-29', end: '2026-11-03' },
 		{ member: '종민', title: '[SR] 브랜드 재발급 브랜드 추가', start: '2026-10-22', end: '2026-10-23' },
 		{ member: '종민', title: '[SR] 간편발급조회 A/B테스트 수정', start: '2026-10-26', end: '2026-10-27' },
+		{ member: '종민', title: '[SR] 자동납부 다업종 간편신청', start: '2026-11-02', end: '2026-11-04' },
+		{ member: '용수', title: '[SR] 앱 실행없이 NFC결제', start: '2026-11-04', end: '2026-11-06' },
+		{ member: '승준', title: '[SR] 요즘나는(미정)', start: '2026-11-04', end: '2026-11-10' },
 	],
 };
