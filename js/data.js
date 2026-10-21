@@ -170,5 +170,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 소비캘린더 계산기 수정', start: '2026-10-26', end: '2026-10-27' },
 		{ member: '종민', title: '[SR] 종합소득세 UXUI 개선', start: '2026-10-28', end: '2026-10-30' },
 		{ member: '종민', title: '[EV] 더더이벤트', start: '2026-10-28', end: '2026-10-28' },
+		{ member: '용수', title: '[SR] 교통카드 이용내역 개선', start: '2026-10-30', end: '2026-11-03' },
+		{ member: '승준', title: '[SR] 장기 할부전환내역 신설', start: '2026-11-11', end: '2026-11-13' },
 	],
 };
