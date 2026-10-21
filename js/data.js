@@ -172,5 +172,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] 더더이벤트', start: '2026-10-28', end: '2026-10-28' },
 		{ member: '용수', title: '[SR] 교통카드 이용내역 개선', start: '2026-10-30', end: '2026-11-03' },
 		{ member: '승준', title: '[SR] 장기 할부전환내역 신설', start: '2026-11-11', end: '2026-11-13' },
+		{ member: '용훈', title: '[SR] 카드신청 공마데 팝업 개선', start: '2026-11-04', end: '2026-11-06' },
 	],
 };
