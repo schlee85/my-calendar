@@ -168,5 +168,7 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[SR] 카드신청 신분증 직접입력 개선', start: '2026-11-09', end: '2026-11-10' },
 		{ member: '용수', title: '[SR] 전체메뉴 개편', start: '2026-10-26', end: '2026-10-29' },
 		{ member: '용수', title: '[SR] 소비캘린더 계산기 수정', start: '2026-10-26', end: '2026-10-27' },
+		{ member: '종민', title: '[SR] 종합소득세 UXUI 개선', start: '2026-10-28', end: '2026-10-30' },
+		{ member: '종민', title: '[EV] 더더이벤트', start: '2026-10-28', end: '2026-10-28' },
 	],
 };
