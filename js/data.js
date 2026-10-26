@@ -175,5 +175,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 카드신청 공마데 팝업 개선', start: '2026-11-04', end: '2026-11-06' },
 		{ member: '승준', title: '[EV] 마이리얼트립 혜택 모음', start: '2026-10-27', end: '2026-10-27' },
 		{ member: '승준', title: '[EV] 켄싱턴호텔앤리조트 특가', start: '2026-10-27', end: '2026-10-27' },
+		{ member: '용수', title: '[SR] 소비캘린더 추가 보완', start: '2026-10-28', end: '2026-10-29' },
 	],
 };
