@@ -177,5 +177,7 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 소비캘린더 추가 보완', start: '2026-10-28', end: '2026-10-29' },
 		{ member: '종민', title: '[SR] PC홈페이지 로그인 개선 - 수정', start: '2026-10-29', end: '2026-10-30' },
 		{ member: '용훈', title: '[EV] 올리브영 블랙프라이데이', start: '2026-10-29', end: '2026-10-29' },
+		{ member: '용훈', title: '[SR] THE SHOPPER GEO', start: '2026-11-09', end: '2026-11-11' },
+		{ member: '종민', title: '[CD] 우리 모두의 카드', start: '2026-11-11', end: '2026-11-13' },
 	],
 };
