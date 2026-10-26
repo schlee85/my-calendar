@@ -176,5 +176,7 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[EV] 마이리얼트립 혜택 모음', start: '2026-10-27', end: '2026-10-27' },
 		{ member: '승준', title: '[EV] 켄싱턴호텔앤리조트 특가', start: '2026-10-27', end: '2026-10-27' },
 		{ member: '용수', title: '[SR] 소비캘린더 추가 보완', start: '2026-10-28', end: '2026-10-29' },
+		{ member: '종민', title: '[SR] PC홈페이지 로그인 개선 - 수정', start: '2026-10-30', end: '2026-10-30' },
+		{ member: '용훈', title: '[EV] 올리브영 블랙프라이데이', start: '2026-10-29', end: '2026-10-29' },
 	],
 };
