@@ -180,5 +180,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] THE SHOPPER GEO', start: '2026-11-09', end: '2026-11-11' },
 		{ member: '종민', title: '[CD] 우리 모두의 카드', start: '2026-11-11', end: '2026-11-13' },
 		{ member: '종민', title: '[SR] 카드발급 완료페이지 내 아이콘', start: '2026-11-06', end: '2026-11-10' },
+		{ member: '종민', title: '[CD] 한샘 렌탈 우리카드', start: '2026-11-11', end: '2026-11-13' },
 	],
 };
