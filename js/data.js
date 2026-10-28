@@ -181,5 +181,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[CD] 우리 모두의 카드', start: '2026-11-11', end: '2026-11-13' },
 		{ member: '종민', title: '[SR] 카드발급 완료페이지 내 아이콘', start: '2026-11-06', end: '2026-11-10' },
 		{ member: '종민', title: '[CD] 한샘 렌탈 우리카드', start: '2026-11-11', end: '2026-11-13' },
+		{ member: '미정', title: '[SR] 소비홈 신설', start: '2026-12-07', end: '2026-12-16' },
 	],
 };
