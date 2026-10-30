@@ -159,7 +159,7 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[SR] 카드QR 개편', start: '2026-10-20', end: '2026-10-21' },
 		{ member: '종민', title: '[EV] the OPUS 대고객', start: '2026-10-21', end: '2026-10-21' },
 		{ member: '미정', title: '[SR] 카드론 수수료 조회 개선', start: '2026-12-03', end: '2026-12-14' },
-		{ member: '승준', title: '[SR] 카드의정석2 ROUTINE GEO', start: '2026-10-29', end: '2026-11-03' },
+		{ member: '승준', title: '[SR] 카드의정석2 ROUTINE GEO', start: '2026-11-10', end: '2026-11-13' },
 		{ member: '종민', title: '[SR] 브랜드 재발급 브랜드 추가', start: '2026-10-22', end: '2026-10-23' },
 		{ member: '종민', title: '[SR] 간편발급조회 A/B테스트 수정', start: '2026-10-26', end: '2026-10-27' },
 		{ member: '종민', title: '[SR] 자동납부 다업종 간편신청', start: '2026-11-02', end: '2026-11-04' },
