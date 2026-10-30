@@ -192,5 +192,7 @@ const CALENDAR_DATA = {
 		{ member: '승준', title: '[SR] GEO 13종', start: '2026-11-25', end: '2026-12-04' },
 		{ member: '용수', title: '[SR] 금융계산기(수수료조회)', start: '2026-12-03', end: '2026-12-14' },
 		{ member: '용수', title: '[SR] 금융 상품 메인 5종', start: '2026-12-15', end: '2026-12-22' },
+		{ member: '승준', title: '[EV] 26.11월 우리 트래블월렛', start: '2026-11-02', end: '2026-11-02' },
+		{ member: '종민', title: '[SR] 이용내역명세서 PDF', start: '2026-11-18', end: '2026-11-24' },
 	],
 };
