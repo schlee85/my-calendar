@@ -185,5 +185,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 내카드실적/혜택 개편', start: '2026-11-11', end: '2026-11-24' },
 		{ member: '용수', title: '[SR] 간편발급조회 모웹홈 진입배너', start: '2026-11-09', end: '2026-11-11' },
 		{ member: '종민', title: '[EV] 토스 페이스페이', start: '2026-11-03', end: '2026-11-03' },
+		{ member: '승준', title: '[SR] 디지털판매 - 서포트', start: '2026-10-30', end: '2026-11-03' },
 	],
 };
