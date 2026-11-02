@@ -7,6 +7,7 @@ const CALENDAR_DATA = {
 		{ name: '용훈', color: '#10b981' },
 		{ name: '용수', color: '#f59e0b' },
 		{ name: '종민', color: '#38bdf8' },
+		{ name: '회섭', color: '#a47551' },
 		{ name: '미정', color: '#9ca3af' },
 	],
 	schedule: [
