@@ -187,7 +187,7 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] 토스 페이스페이', start: '2026-11-03', end: '2026-11-03' },
 		{ member: '승준', title: '[SR] 디지털판매 - 서포트', start: '2026-10-30', end: '2026-11-03' },
 		{ member: '용수', title: '[SR] 꾹 개선', start: '2026-11-23', end: '2026-11-27' },
-		{ member: '용수', title: '[SR] 전체메뉴 개선 - 수정', start: '2026-11-23', end: '2026-12-04' },
+		{ member: '용수', title: '[SR] 전체메뉴 개선 - 수정', start: '2026-12-21', end: '2027-01-12' },
 		{ member: '용훈', title: '[SR] 약관동의(종주먹)', start: '2026-11-25', end: '2026-11-30' },
 		{ member: '승준', title: '[SR] GEO 13종', start: '2026-11-16', end: '2026-11-25' },
 		{ member: '승준', title: '[SR] 금융계산기(수수료조회)', start: '2026-11-18', end: '2026-12-03' },
