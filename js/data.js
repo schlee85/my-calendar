@@ -198,5 +198,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[CD] 우리 모두의카드(체크)', start: '2026-11-16', end: '2026-11-18' },
 		{ member: '종민', title: '[EV] UPI 알리익스프레스', start: '2026-11-05', end: '2026-11-05' },
 		{ member: '종민', title: '[EV] 27년도 미리 우리V클럽', start: '2026-11-10', end: '2026-11-10' },
+		{ member: '용수', title: '[SR] 카드의정석2 PAY GEO', start: '2026-11-16', end: '2026-11-19' },
 	],
 };
