@@ -202,5 +202,6 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[SR] 카드QR 개선', start: '2026-12-02', end: '2026-12-24' },
 		{ member: '용훈', title: '[SR] 모바일브랜치(다국어)', start: '2026-12-07', end: '2026-12-18' },
 		{ member: '종민', title: '[SR] 모바일브랜치 - 서포트', start: '2026-12-14', end: '2026-12-16' },
+		{ member: '용훈', title: '[SR] GEO 13종 - 서포트', start: '2026-11-16', end: '2026-11-20' },
 	],
 };
