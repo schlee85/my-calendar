@@ -197,5 +197,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[SR] 이용내역명세서 PDF', start: '2026-11-18', end: '2026-11-24' },
 		{ member: '용수', title: '[CD] 우리금융저축은행 I&U+', start: '2026-11-11', end: '2026-11-13' },
 		{ member: '종민', title: '[CD] 우리 모두의카드(체크)', start: '2026-11-16', end: '2026-11-18' },
+		{ member: '종민', title: '[EV] UPI 알리익스프레스', start: '2026-11-05', end: '2026-11-05' },
 	],
 };
