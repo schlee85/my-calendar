@@ -209,5 +209,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[SR] 비대면 카드해지 페이지', start: '2026-11-25', end: '2026-11-30' },
 		{ member: '종민', title: '[SR] PDF HTML 작업', start: '2026-11-16', end: '2026-11-20' },
 		{ member: '회섭', title: '[CD] 교보SBI 우리체크', start: '2026-11-16', end: '2026-11-20' },
+		{ member: '용훈', title: '[SR] 가스요금 자동납부 서비스 화면', start: '2026-11-20', end: '2026-11-25' },
 	],
 };
