@@ -212,5 +212,6 @@ const CALENDAR_DATA = {
 		{ member: '용훈', title: '[SR] 가스요금 자동납부 서비스 화면', start: '2026-11-20', end: '2026-11-25' },
 		{ member: '회섭', title: '[SR] 광고성 PUSH 수신거부', start: '2026-11-16', end: '2026-11-17' },
 		{ member: '회섭', title: '[SR] 홈페이지 금융메인 버튼 및 페이지 추가', start: '2026-11-27', end: '2026-12-01' },
+		{ member: '용수', title: '[EV] 2027년 로열티그룹', start: '2026-11-20', end: '2026-11-20' },
 	],
 };
