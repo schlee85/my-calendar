@@ -215,5 +215,6 @@ const CALENDAR_DATA = {
 		{ member: '용수', title: '[EV] 2027년 로열티그룹', start: '2026-11-20', end: '2026-11-20' },
 		{ member: '종민', title: '[SR] 유니버셜 I&U+ 카드발급 완료화면', start: '2026-11-19', end: '2026-11-20' },
 		{ member: '회섭', title: '[SR] 즉시결제 결제화면 꿀머니 링크', start: '2026-11-23', end: '2026-11-24' },
+		{ member: '회섭', title: '[SR] MY페이지 내 페이 동작 개선', start: '2026-11-24', end: '2026-11-26' },
 	],
 };
