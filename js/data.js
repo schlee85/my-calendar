@@ -220,5 +220,6 @@ const CALENDAR_DATA = {
 		{ member: '회섭', title: '[CD] COPORATE Value', start: '2026-11-19', end: '2026-11-23' },
 		{ member: '종민', title: '[SR] 업무별 모음(브릿지) 페이지', start: '2026-12-01', end: '2026-12-04' },
 		{ member: '종민', title: '[EV] KG이니시스', start: '2026-11-25', end: '2026-11-25' },
+		{ member: '용수', title: '[CD] 카드의정석2 TEEN WAY', start: '2026-11-19', end: '2026-11-20' },
 	],
 };
