@@ -224,5 +224,7 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] THE SHOPPER 대고객', start: '2026-11-23', end: '2026-11-23' },
 		{ member: '승준', title: '[EV] 스텝챌린지 서비스 안내', start: '2026-11-24', end: '2026-11-24' },
 		{ member: '승준', title: '[EV] 보험료 자동납부 5천원 캐시백', start: '2026-11-27', end: '2026-11-27' },
+		{ member: '용수', title: '[EV] 위비트래블 12월 해외 이용 프로모션', start: '2026-11-25', end: '2026-11-25' },
+		{ member: '종민', title: '[CD] ROYAL BLUE POINT+', start: '2026-11-26', end: '2026-11-30' },
 	],
 };
