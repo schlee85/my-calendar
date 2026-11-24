@@ -228,6 +228,5 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[CD] ROYAL BLUE POINT+', start: '2026-11-26', end: '2026-11-30' },
 		{ member: '회섭', title: '[SR] 우리V클럽 등급 로고이미지', start: '2026-11-25', end: '2026-11-27' },
 		{ member: '회섭', title: '[CD] 배민클럽 우리카드', start: '2026-11-30', end: '2026-12-02' },
-		{ member: '승찬', title: '[SR] 샘플테스트', start: '2026-11-25', end: '2026-11-25' },
 	],
 };
