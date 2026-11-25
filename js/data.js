@@ -230,5 +230,6 @@ const CALENDAR_DATA = {
 		{ member: '회섭', title: '[CD] 배민클럽 우리카드', start: '2026-11-30', end: '2026-12-02' },
 		{ member: '종민', title: '[EV] 우리카드 재발급', start: '2026-11-27', end: '2026-11-27' },
 		{ member: '종민', title: '[SR] 신용카드 해지시 자동납부 안내 개선', start: '2026-12-01', end: '2026-12-02' },
+		{ member: '회섭', title: '[SR] 메인 팝업 레이아웃 변경', start: '2026-12-03', end: '2026-12-07' },
 	],
 };
