@@ -236,5 +236,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] 웨스틴 조선 서울 호텔', start: '2026-12-04', end: '2026-12-04' },
 		{ member: '용훈', title: '[EV] 제주항공 캐시백', start: '2026-12-01', end: '2026-12-01' },
 		{ member: '회섭', title: '[EV] T라이트 우리카드', start: '2026-12-10', end: '2026-12-10' },
+		{ member: '승준', title: '[SR] 해외이용설정 화면 UI 변경', start: '2026-12-16', end: '2026-12-18' },
 	],
 };
