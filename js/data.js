@@ -234,5 +234,6 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] S-OIL 주유400 우리카드', start: '2026-12-09', end: '2026-12-10' },
 		{ member: '종민', title: '[EV] SK 주유400 우리카드', start: '2026-12-09', end: '2026-12-10' },
 		{ member: '회섭', title: '[EV] 해외라운지 HTML', start: '2026-12-02', end: '2026-12-02' },
+		{ member: '종민', title: '[EV] 웨스틴 조선 서울 호텔', start: '2026-12-04', end: '2026-12-04' },
 	],
 };
