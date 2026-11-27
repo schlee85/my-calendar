@@ -231,5 +231,7 @@ const CALENDAR_DATA = {
 		{ member: '종민', title: '[EV] 우리카드 재발급', start: '2026-11-27', end: '2026-11-27' },
 		{ member: '종민', title: '[SR] 신용카드 해지시 자동납부 안내 개선', start: '2026-12-01', end: '2026-12-02' },
 		{ member: '회섭', title: '[SR] 메인 팝업 레이아웃 변경', start: '2026-12-03', end: '2026-12-07' },
+		{ member: '종민', title: '[EV] S-OIL 주유400 우리카드', start: '2026-12-09', end: '2026-12-10' },
+		{ member: '종민', title: '[EV] SK 주유400 우리카드', start: '2026-12-09', end: '2026-12-10' },
 	],
 };
