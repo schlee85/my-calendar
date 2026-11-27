@@ -233,5 +233,6 @@ const CALENDAR_DATA = {
 		{ member: '회섭', title: '[SR] 메인 팝업 레이아웃 변경', start: '2026-12-03', end: '2026-12-07' },
 		{ member: '종민', title: '[EV] S-OIL 주유400 우리카드', start: '2026-12-09', end: '2026-12-10' },
 		{ member: '종민', title: '[EV] SK 주유400 우리카드', start: '2026-12-09', end: '2026-12-10' },
+		{ member: '회섭', title: '[EV] 해외라운지 HTML', start: '2026-12-02', end: '2026-12-02' },
 	],
 };
